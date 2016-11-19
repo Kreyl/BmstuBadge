@@ -1,0 +1,45 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# C-RESCUE-Badge
+#
+DEF C-RESCUE-Badge C 0 10 N Y 1 F N
+F0 "C" 25 90 50 H V L CNN
+F1 "C-RESCUE-Badge" 25 -90 50 H V L CNN
+F2 "" 38 -140 50 H V C CNN
+F3 "" 0 -10 50 H V C CNN
+$FPLIST
+ C?
+ C_????_*
+ C_????
+ SMD*_c
+ Capacitor*
+$ENDFPLIST
+DRAW
+S 0 30 -160 30 0 1 7 N
+S 0 30 160 30 0 1 7 N
+S 160 -30 -160 -30 0 1 7 N
+X ~ 1 0 140 110 D 40 40 1 1 P
+X ~ 2 0 -150 118 U 40 40 1 1 P
+ENDDRAW
+ENDDEF
+#
+# R-RESCUE-Badge
+#
+DEF R-RESCUE-Badge R 0 0 N Y 1 F N
+F0 "R" 130 90 50 V V C CNN
+F1 "R-RESCUE-Badge" 130 -100 50 V V C CNN
+F2 "" -70 0 50 V V C CNN
+F3 "" 0 0 50 H V C CNN
+$FPLIST
+ R_*
+ Resistor_*
+$ENDFPLIST
+DRAW
+S -80 -200 80 200 0 1 7 N
+X ~ 1 0 300 98 D 50 50 1 1 P
+X ~ 2 0 -300 98 U 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
+#End Library

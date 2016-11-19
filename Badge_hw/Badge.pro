@@ -1,6 +1,6 @@
-update=06.11.2016 15:09:54
+update=19.11.2016 9:23:41
 version=1
-last_client=eeschema
+last_client=kicad
 [pcbnew]
 version=1
 LastNetListRead=
@@ -87,3 +87,4 @@ LibName55=D:/Kreyl/LibsForKiCAD/Kicad/Transformers
 LibName56=D:/Kreyl/LibsForKiCAD/Kicad/Transistors_kl
 LibName57=D:/temp/Badge-cache
 LibName58=Badge-cache1
+LibName59=Badge-cacheGOST
