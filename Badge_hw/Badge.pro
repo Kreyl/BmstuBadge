@@ -1,4 +1,4 @@
-update=19.11.2016 9:23:41
+update=20.11.2016 18:05:49
 version=1
 last_client=kicad
 [pcbnew]
@@ -85,6 +85,6 @@ LibName53=D:/Kreyl/LibsForKiCAD/Kicad/Switches
 LibName54=D:/Kreyl/LibsForKiCAD/Kicad/Tittar_kl
 LibName55=D:/Kreyl/LibsForKiCAD/Kicad/Transformers
 LibName56=D:/Kreyl/LibsForKiCAD/Kicad/Transistors_kl
-LibName57=D:/temp/Badge-cache
-LibName58=Badge-cache1
-LibName59=Badge-cacheGOST
+LibName57=Badge-cache1
+LibName58=Badge-cacheGOST
+LibName59=D:/Libs/KiCAD/ns_antennas
