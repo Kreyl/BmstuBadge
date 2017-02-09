@@ -28,34 +28,10 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:ns_power
-LIBS:adc_kl
-LIBS:Allwinner
-LIBS:Antennas_kl
-LIBS:Atmel_kl
-LIBS:Audio_kl
-LIBS:Auds
-LIBS:Connectors_kl
-LIBS:dac
-LIBS:display_kl
-LIBS:ESDProtection
-LIBS:Interface_kl
-LIBS:modules
-LIBS:OpAmp_kl
-LIBS:pcb_details
-LIBS:Power_kl
-LIBS:RF ICs
 LIBS:Sensors
-LIBS:SmartCard_kl
-LIBS:st_kl
-LIBS:standard_logic
 LIBS:Switches
-LIBS:Tittar_kl
-LIBS:Transformers
-LIBS:Transistors_kl
 LIBS:Badge-cache1
 LIBS:Badge-cacheGOST
-LIBS:ns_antennas
 LIBS:Badge-cache
 EELAYER 26 0
 EELAYER END
@@ -2871,7 +2847,7 @@ U 1 1 583C8829
 P 24470 1530
 F 0 "D7" H 24570 1785 60  0001 C CNN
 F 1 "ANT" H 24365 1815 60  0001 C CNN
-F 2 "" H 24470 1530 60  0001 C CNN
+F 2 "ANT_868_INV_F:ANTENNA_868_INV_F" H 24470 1530 60  0001 C CNN
 F 3 "" H 24470 1530 60  0001 C CNN
 	1    24470 1530
 	1    0    0    -1  
@@ -5077,4 +5053,17 @@ F 3 "" H 1580 16360 50  0000 C CNN
 	1    1580 16360
 	1    0    0    -1  
 $EndComp
+$Comp
+L GNDSignal #PWR?
+U 1 1 589CC065
+P 24620 1660
+F 0 "#PWR?" H 24670 1710 50  0001 C CNN
+F 1 "GNDSignal" H 20  -190 50  0001 C CNN
+F 2 "" H 20  -90 50  0000 C CNN
+F 3 "" H 20  -90 50  0000 C CNN
+	1    24620 1660
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	24620 1660 24620 1600
 $EndSCHEMATC

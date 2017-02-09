@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name ANT_868_INV_F)(type KiCad)(uri "$(KIPRJMOD)/ANT_868_INV_F.pretty")(options "")(descr ""))
+)
