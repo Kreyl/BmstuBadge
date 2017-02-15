@@ -1,4 +1,4 @@
-(module ANTENNA_868_INV_F (layer F.Cu) (tedit 589E17EF)
+(module ANTENNA_868_INV_F_SHARP (layer F.Cu) (tedit 589E17EF)
   (fp_text reference REF** (at 27.2 -4.01) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )

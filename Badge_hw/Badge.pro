@@ -1,4 +1,4 @@
-update=09.02.2017 14:42:21
+update=15.02.2017 22:44:41
 version=1
 last_client=kicad
 [pcbnew]
@@ -37,7 +37,7 @@ SpiceUseNetNumbers=0
 LabSize=60
 [eeschema]
 version=1
-LibDir=
+LibDir=F:/Kreyl/LibsForKiCAD/Kicad;KiCAD Libs
 [eeschema/libraries]
 LibName1=Badge-rescue
 LibName2=power
@@ -98,3 +98,4 @@ LibName56=D:/Kreyl/LibsForKiCAD/Kicad/Transistors_kl
 LibName57=Badge-cache1
 LibName58=Badge-cacheGOST
 LibName59=D:/Libs/KiCAD/ns_antennas
+LibName60=KiCAD Libs/sensors_ns
