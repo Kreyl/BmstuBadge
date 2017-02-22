@@ -4,7 +4,7 @@
 	<Format>Project</Format>
 	<Header>
 		<Program name="TopoR" version="6.2"/>
-		<GUID>{5AE8A3D7-F3E9-4D91-8D32-840F9F18F60D}</GUID>
+		<GUID>{8CEA37AC-A151-4C11-B805-8911614DF5AB}</GUID>
 		<Annotation>Project file</Annotation>
 	</Header>
 	<Document>
@@ -12,11 +12,13 @@
 		<Pcb>
 			<File path=".\Badge.fsx" isopened="1"/>
 		</Pcb>
+		<Documents path="F:\BMSTUBadge\Badge_hw\"/>
+		<Import>
+			<Specctra>
+			<Path name="F:\BMSTUBadge\Badge_hw\Badge.dsn"/>
+			</Specctra>
+		</Import>
 		<ARouteSessions>
-			<Session name="Badge" date="2017-02-05 23:08:21" path=".\autoroute_Badge_170205230821\">
-			</Session>
-			<Session name="Badge" date="2017-02-05 23:12:46" path=".\autoroute_Badge_170205231246\">
-			</Session>
 		</ARouteSessions>
 	</Document>
 </Project>

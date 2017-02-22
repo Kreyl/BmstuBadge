@@ -1291,7 +1291,7 @@ $EndComp
 Text Label 7870 17430 0    60   ~ 0
 SDA
 Text Label 7870 17580 0    60   ~ 0
-SCK
+SCL
 Text Label 7870 17880 0    60   ~ 0
 PWR_IRQ
 $Comp
