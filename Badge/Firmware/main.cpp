@@ -40,7 +40,6 @@ int main(void) {
 
     Led.Init();
     Led.StartOrRestart(lsqStart);
-
     SD.Init();
 //    SimpleSensors::Init();
 
