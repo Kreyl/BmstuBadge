@@ -39,7 +39,7 @@ int main(void) {
     Clk.PrintFreqs();
 
     Led.Init();
-    Led.StartOrRestart(lsqStart);
+    Led.StartOrRestart(lsqFailure);
     SD.Init();
 //    SimpleSensors::Init();
 
