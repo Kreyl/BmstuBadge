@@ -21,7 +21,18 @@
       )
     )
     (boundary
-      (rect pcb 99900 -99900 162100 -160100)
+      (path pcb 0  105000 -160000  104132 -159924  103290 -159698  102500 -159330
+            101786 -158830  101170 -158214  100670 -157500  100302 -156710
+            100076 -155868  100000 -155000  100000 -105000  100076 -104132
+            100302 -103290  100670 -102500  101170 -101786  101786 -101170
+            102500 -100670  103290 -100302  104132 -100076  105000 -100000
+            157000 -100000  157868 -100076  158710 -100302  159500 -100670
+            160214 -101170  160830 -101786  161330 -102500  161698 -103290
+            161924 -104132  162000 -105000  162000 -155000  161924 -155868
+            161698 -156710  161330 -157500  160830 -158214  160214 -158830
+            159500 -159330  158710 -159698  157868 -159924  157000 -160000
+            138200 -160000  138200 -137300  131800 -137300  131800 -160000
+            105000 -160000  105000 -160000)
     )
     (via "Via[0-1]_800:400_um")
     (rule
@@ -33,46 +44,46 @@
   )
   (placement
     (component Resistors:RES_0603_FUSE
-      (place F2 135100 -136300 back 180 (PN Fuse0R))
-      (place F1 108600 -136300 back 0 (PN Fuse0R))
+      (place F2 130000 -135100 front -0 (PN Fuse0R))
+      (place F1 130300 -126300 front 90 (PN Fuse0R))
     )
     (component Capacitors:CAP_0603
-      (place C18 149100 -138100 back 270 (PN 1u))
+      (place C18 147300 -134800 front 90 (PN 1u))
       (place C10 102942 -120866 front 180 (PN 220p))
       (place C14 114270 -125570 front 270 (PN 10n))
       (place C16 102980 -125750 front 180 (PN 220p))
-      (place C20 138000 -136300 back 0 (PN 1u))
+      (place C20 140800 -134900 front 270 (PN 1u))
       (place C9 108530 -131280 front 270 (PN 0.1u))
       (place C7 117080 -129070 front 180 (PN 18p))
-      (place C5 124532 -149060 front 0 (PN 0.1u))
-      (place C4 121738 -153886 front 270 (PN 0.1u))
-      (place C1 110562 -142964 front 90 (PN 0.1u))
+      (place C5 121732 -151460 front 0 (PN 0.1u))
+      (place C4 120200 -156500 front 270 (PN 0.1u))
+      (place C1 107300 -142900 front 90 (PN 0.1u))
     )
     (component Capacitors:CAP_1210
-      (place C21 144400 -143700 back 0 (PN 100u))
+      (place C21 151800 -140600 front 270 (PN 100u))
     )
     (component Capacitors:CAP_1812
-      (place C11 144700 -148900 back 0 (PN "0.1u 400V"))
+      (place C11 144200 -147900 front 180 (PN "0.1u 400V"))
     )
     (component "Connectors:PLS-2-wide"
       (place LIPO_BAT1 143700 -155500 front 0 (PN DW02R))
     )
     (component Diodes:SMA_DO214AC
-      (place D3 152500 -142600 back 180 (PN DIODE))
+      (place D3 141400 -141300 front 270 (PN DIODE))
     )
     (component Diodes:SMA_DO214AC::1
-      (place D2 153400 -148400 back 90 (PN DIODE))
+      (place D2 154700 -148200 front 0 (PN DIODE))
     )
     (component LQFP_TQFP:LQFP48
-      (place DD1 115200 -149600 front 180 (PN STM32F030C8Tx))
+      (place DD1 112800 -150400 front 180 (PN STM32F030C8Tx))
     )
     (component PCB:TESTPOINT_1MM
-      (place TP2 126564 -151854 front 0 (PN TESTPOINT))
+      (place TP2 123764 -154254 front 0 (PN TESTPOINT))
       (place TP1 113356 -129502 front 90 (PN TESTPOINT))
     )
     (component "SOT:SOT23-3"
-      (place D4 153600 -137700 back 270 (PN Zener))
-      (place U1 144600 -138100 back 90 (PN "MCP1700T-3002E/TT"))
+      (place D4 145600 -140500 front 270 (PN Zener))
+      (place U1 144300 -134800 front 0 (PN "MCP1700T-3002E/TT"))
     )
     (component ANT_868_INV_F:ANTENNA_868_INV_F_SHARP
       (place D5 103500 -114300 front 0 (PN ANT))
@@ -83,25 +94,25 @@
     )
     (component Capacitors:CAP_0402::1
       (place C19 107514 -117818 front 180 (PN DoNotMount))
-      (place L1 128342 -140424 front 180 (PN BLM15AG102))
+      (place L1 124000 -146000 front 180 (PN BLM15AG102))
     )
     (component Capacitors:CAP_0603::1
       (place C13 112800 -120950 front 0 (PN 3.3p))
       (place C15 107006 -131280 front 270 (PN 0.1u))
       (place C12 107768 -120104 front 90 (PN 10n))
       (place C8 117080 -121870 front 0 (PN 18p))
-      (place C6 124532 -147536 front 0 (PN 1u))
-      (place C2 116912 -156426 front 180 (PN 0.1u))
-      (place C3 125802 -141440 front 270 (PN 10u))
+      (place C6 121732 -149936 front 0 (PN 1u))
+      (place C2 114100 -158300 front 180 (PN 0.1u))
+      (place C3 122000 -146800 front 270 (PN 10u))
     )
     (component "Connectors:PLS-6"
-      (place XL1 158822 -119596 front 270 (PN CONN_6))
+      (place XL1 103000 -154500 front 90 (PN CONN_6))
     )
     (component Installation:BATTERY_CH7410
-      (place B1 120600 -148100 back 0 (PN BAT))
+      (place B1 146700 -121300 front 180 (PN BAT))
     )
     (component LEDs:LED_5050
-      (place D1 138454 -124928 front 180 (PN LED_RGB))
+      (place D1 122000 -138600 front 180 (PN LED_RGB))
     )
     (component QFN_DFN:QFN20
       (place DD2 109540 -125550 front 90 (PN CC1101))
@@ -113,12 +124,12 @@
       (place BLN1 109840 -120650 front 90 (PN BALUN868JOHANSON))
     )
     (component Resistors:RES_0603
-      (place R1 131000 -126500 front 180 (PN 1k))
-      (place R3 131000 -123300 front 180 (PN 1k))
+      (place R1 115400 -140600 front 180 (PN 1k))
+      (place R3 115400 -137400 front 180 (PN 1k))
       (place R7 102980 -124150 front 180 (PN 56k))
     )
     (component Resistors:RES_0603::1
-      (place R2 131000 -124900 front 180 (PN 1k))
+      (place R2 115400 -139000 front 180 (PN 1k))
       (place R6 110054 -131280 front 270 (PN 56k))
     )
   )

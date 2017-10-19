@@ -39,12 +39,24 @@ int main(void) {
     Clk.PrintFreqs();
 
     Led.Init();
-    Led.StartOrRestart(lsqFailure);
+    Led.StartOrRestart(lsqStart);
+
+    i2c3.Init();
+    uint8_t write_outputControl[]={0x12,0x0E};
+    uint8_t write_dcdc3Voltage[]={0x27,0x68};
+    uint8_t write_ldo24Voltage[]={0x28,0xFA};
+    uint8_t write_testPowerButton[]={0x36,0x05};
+    i2c3.Write(0x68,write_outputControl,2);
+    i2c3.Write(0x68,write_dcdc3Voltage,2);
+    i2c3.Write(0x68,write_ldo24Voltage,2);
+    i2c3.Write(0x68,write_testPowerButton,2);
+
     SD.Init();
+
 //    SimpleSensors::Init();
 
     // Main cycle
-    ITask();
+//    ITask();
 }
 
 __noreturn

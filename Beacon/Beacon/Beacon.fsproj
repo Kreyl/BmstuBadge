@@ -4,19 +4,20 @@
 	<Format>Project</Format>
 	<Header>
 		<Program name="TopoR" version="6.1"/>
-		<GUID>{346542FA-4EB8-45FC-ABC4-BDFC8D04EAA1}</GUID>
+		<GUID>{22C22971-3B5F-4C82-842A-A78D2C7D5EF9}</GUID>
 		<Annotation>Project file</Annotation>
 	</Header>
 	<Document>
 		<LocalLibrary />
 		<Pcb>
-			<File path=".\BmstuAnchor.fsx" Folder="-1" isopened="0"/>
+			<File path=".\BmstuAnchor.fsx" Folder="-1" isopened="1"/>
 		</Pcb>
 		<Import>
 			<Specctra>
 			<Path name="F:\BMSTUBadge\Beacon\Beacon_hw\BmstuAnchor.dsn"/>
 			</Specctra>
 		</Import>
+		<Export path="F:\BMSTUBadge\Beacon\Beacon_hw\"/>
 		<ARouteSessions>
 		</ARouteSessions>
 	</Document>
