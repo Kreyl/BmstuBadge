@@ -41,22 +41,24 @@ int main(void) {
     Led.StartOrRestart(lsqStart);
 
 
-    uint32_t check=15;
-	Printf("check=%u",check);
     i2c3.Init();
-    uint8_t axpAddr = 0x68;
+    i2c3.ScanBus();
 
-//	Printf("check=\r%u",check);
-//    check=i2c3.CheckAddress(axpAddr);
-//	Printf("check=\r%u",check);
-//
+//    uint8_t axpAddr = 0x34;
+    uint8_t reg;
+    uint8_t regAddr = 0x00;
+    uint8_t rslt = i2c3.WriteRead(0x34, &regAddr, 1, &reg, 1);
+    Printf("r: %u; reg: %X\r", rslt, reg);
+
+
+
 //    uint8_t write_outputControl[]={0x12,0x0E};
 //    uint8_t write_dcdc3Voltage[]={0x27,0x68};
-//    uint8_t write_ldo24Voltage[]={0x28,0xFA};
+    uint8_t write_ldo24Voltage[]={0x28,127};
 //    uint8_t write_testPowerButton[]={0x36,0x0F};
 //    i2c3.Write(axpAddr,write_outputControl,2);
 //    i2c3.Write(axpAddr,write_dcdc3Voltage,2);
-//    i2c3.Write(axpAddr,write_ldo24Voltage,2);
+    i2c3.Write(0x34,write_ldo24Voltage,2);
 //    i2c3.Write(axpAddr,write_testPowerButton,2);
 
     SD.Init();

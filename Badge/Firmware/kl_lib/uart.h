@@ -31,7 +31,7 @@ struct UartParams_t {
 #define UART_USE_DMA        FALSE
 
 // Set to true if RX needed
-#define UART_RX_ENABLED     TRUE
+#define UART_RX_ENABLED     FALSE
 
 #if UART_RX_ENABLED // ==== RX ====
 #define UART_RXBUF_SZ       99 // unprocessed bytes
