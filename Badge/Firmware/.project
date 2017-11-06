@@ -24,4 +24,14 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>Lib</name>
+			<value>file:/F:/BMSTUBadge/Badge/Firmware/kl_lib</value>
+		</variable>
+		<variable>
+			<name>OS</name>
+			<value>file:/F:/BMSTUBadge/Badge/Firmware/os</value>
+		</variable>
+	</variableList>
 </projectDescription>

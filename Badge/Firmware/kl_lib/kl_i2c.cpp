@@ -52,19 +52,6 @@ static const i2cParams_t I2C2Params = {
 i2c_t i2c2 {&I2C2Params};
 #endif
 
-#if I2C3_ENABLED
-static const i2cParams_t I2C3Params = {
-        I2C3,
-        I2C3_GPIO, I2C3_SCL, I2C3_SDA,
-        I2C3_BAUDRATE,
-        I2C3_DMA_TX,
-        I2C3_DMA_RX,
-        (I2C_DMATX_MODE | STM32_DMA_CR_CHSEL(I2C3_DMA_CHNL)),
-        (I2C_DMARX_MODE | STM32_DMA_CR_CHSEL(I2C3_DMA_CHNL))
-};
-i2c_t i2c3 {&I2C3Params};
-#endif
-
 extern "C"
 void i2cDmaIrqHandler(void *p, uint32_t flags) {
     chSysLockFromISR();
@@ -478,14 +465,18 @@ i2c_t i2c2 {&I2C2Params};
 static const i2cParams_t I2C3Params = {
         I2C3,
         I2C3_GPIO, I2C3_SCL, I2C3_SDA, I2C_AF,
-                                  // Calculated by Cube for 100kHz
         I2C3_DMA_TX,
         I2C3_DMA_RX,
-        (STM32_DMA_CR_PSIZE_BYTE | STM32_DMA_CR_MSIZE_BYTE | STM32_DMA_CR_MINC | STM32_DMA_CR_DIR_M2P | STM32_DMA_CR_CHSEL(I2C3_DMA_CHNL) | DMA_PRIORITY_MEDIUM),
-        (STM32_DMA_CR_PSIZE_BYTE | STM32_DMA_CR_MSIZE_BYTE | STM32_DMA_CR_MINC | STM32_DMA_CR_DIR_P2M | STM32_DMA_CR_CHSEL(I2C3_DMA_CHNL) | DMA_PRIORITY_MEDIUM),
+        I2C_DMATX_MODE(I2C3_DMA_CHNL),
+        I2C_DMARX_MODE(I2C3_DMA_CHNL),
+#if defined STM32L4XX
         STM32_I2C3_EVENT_NUMBER,
         STM32_I2C3_ERROR_NUMBER,
-		i2cclkHSI
+        I2C_CLK_SRC
+#else
+        STM32_I2C1_GLOBAL_NUMBER,
+        STM32_I2C1_GLOBAL_NUMBER,
+#endif
 };
 i2c_t i2c3 {&I2C3Params};
 #endif
@@ -540,7 +531,7 @@ void i2c_t::Init() {
     dmaStreamAllocate(PParams->PDmaRx, IRQ_PRIO_MEDIUM, nullptr, nullptr);
     dmaStreamSetPeripheral(PParams->PDmaTx, &pi2c->TXDR);
     dmaStreamSetPeripheral(PParams->PDmaRx, &pi2c->RXDR);
-    // ==== IRQ ====
+//    // ==== IRQ ====
     nvicEnableVector(PParams->IrqEvtNumber, IRQ_PRIO_MEDIUM);
     nvicEnableVector(PParams->IrqErrorNumber, IRQ_PRIO_MEDIUM);
 }

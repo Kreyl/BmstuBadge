@@ -28,7 +28,7 @@ struct UartParams_t {
 #endif
 };
 
-#define UART_USE_DMA        TRUE
+#define UART_USE_DMA        FALSE
 
 // Set to true if RX needed
 #define UART_RX_ENABLED     TRUE

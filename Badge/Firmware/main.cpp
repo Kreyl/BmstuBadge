@@ -25,7 +25,6 @@ LedRGB_t Led { LED_RED_CH, LED_GREEN_CH, LED_BLUE_CH };
 
 int main(void) {
     // ==== Setup clock frequency ====
-    Clk.SetHiPerfMode();
     Clk.Select48MhzSrc(src48PllQ);
     Clk.UpdateFreqValues();
 
@@ -41,15 +40,24 @@ int main(void) {
     Led.Init();
     Led.StartOrRestart(lsqStart);
 
+
+    uint32_t check=15;
+	Printf("check=%u",check);
     i2c3.Init();
-    uint8_t write_outputControl[]={0x12,0x0E};
-    uint8_t write_dcdc3Voltage[]={0x27,0x68};
-    uint8_t write_ldo24Voltage[]={0x28,0xFA};
-    uint8_t write_testPowerButton[]={0x36,0x05};
-    i2c3.Write(0x68,write_outputControl,2);
-    i2c3.Write(0x68,write_dcdc3Voltage,2);
-    i2c3.Write(0x68,write_ldo24Voltage,2);
-    i2c3.Write(0x68,write_testPowerButton,2);
+    uint8_t axpAddr = 0x68;
+
+//	Printf("check=\r%u",check);
+//    check=i2c3.CheckAddress(axpAddr);
+//	Printf("check=\r%u",check);
+//
+//    uint8_t write_outputControl[]={0x12,0x0E};
+//    uint8_t write_dcdc3Voltage[]={0x27,0x68};
+//    uint8_t write_ldo24Voltage[]={0x28,0xFA};
+//    uint8_t write_testPowerButton[]={0x36,0x0F};
+//    i2c3.Write(axpAddr,write_outputControl,2);
+//    i2c3.Write(axpAddr,write_dcdc3Voltage,2);
+//    i2c3.Write(axpAddr,write_ldo24Voltage,2);
+//    i2c3.Write(axpAddr,write_testPowerButton,2);
 
     SD.Init();
 

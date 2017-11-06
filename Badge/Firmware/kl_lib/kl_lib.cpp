@@ -46,6 +46,36 @@ void PrintThdFreeStack(void *wsp, uint32_t size) {
 
 #endif
 
+#if defined STM32L4XX
+namespace Random {
+void TrueInit() {
+    rccEnableAHB2(RCC_AHB2ENR_RNGEN, FALSE);
+    RNG->CR = RNG_CR_RNGEN; // Enable random generator
+    while((RNG->SR & RNG_SR_DRDY) == 0);    // Wait for new random value
+}
+
+void TrueDeinit() {
+    RNG->CR = 0;
+    rccDisableAHB2(RCC_AHB2ENR_RNGEN, FALSE);
+}
+
+uint32_t TrueGenerate(uint32_t LowInclusive, uint32_t HighInclusive) {
+    while((RNG->SR & RNG_SR_DRDY) == 0);    // Wait for new random value
+    uint32_t dw = RNG->DR;
+    uint32_t rslt = (dw % (HighInclusive + 1 - LowInclusive)) + LowInclusive;
+//    PrintfI("%u; l %u; h %u; r %u\r", dw, LowInclusive, HighInclusive, rslt);
+    return rslt;
+}
+
+void SeedWithTrue() {
+    while((RNG->SR & RNG_SR_DRDY) == 0);    // Wait for new random value
+    uint32_t dw = RNG->DR;
+    srandom(dw);
+}
+
+} // namespace
+#endif
+
 #if 1 // ============================= Timer ===================================
 static uint32_t GetTimInputFreq(TIM_TypeDef* ITmr) {
     uint32_t InputFreq = 0;
@@ -318,17 +348,51 @@ void chDbgPanic(const char *msg1) {
 #endif
 
 #if 1 // ================= FLASH & EEPROM ====================
-#define FLASH_EraseTimeout      1000000UL
-#define FLASH_ProgramTimeout    36000UL
+#define FLASH_EraseTimeout      MS2ST(7)
+#define FLASH_ProgramTimeout    MS2ST(7)
 namespace Flash {
 
 // ==== Common ====
+void ClearPendingFlags() {
+#ifdef STM32L1XX
+    FLASH->SR = FLASH_SR_EOP | FLASH_SR_PGAERR | FLASH_SR_WRPERR;
+#elif defined STM32L4XX
+    FLASH->SR = FLASH_SR_EOP | FLASH_SR_PROGERR | FLASH_SR_WRPERR;
+#else
+    FLASH->SR = FLASH_SR_EOP | FLASH_SR_PGERR | FLASH_SR_WRPRTERR;
+#endif
+}
+
+#if defined STM32L4XX
+void ClearErrFlags() {
+    FLASH->SR |= FLASH_SR_OPTVERR | FLASH_SR_RDERR | FLASH_SR_FASTERR |
+            FLASH_SR_MISERR | FLASH_SR_PGSERR | FLASH_SR_SIZERR |
+            FLASH_SR_PGAERR | FLASH_SR_WRPERR | FLASH_SR_PROGERR | FLASH_SR_OPERR;
+}
+
+// Wait for a Flash operation to complete or a TIMEOUT to occur
+static uint8_t WaitForLastOperation(systime_t Timeout_st) {
+    systime_t start = chVTGetSystemTimeX();
+    while(FLASH->SR & FLASH_SR_BSY) {
+        if(Timeout_st != TIME_INFINITE) {
+            if(chVTTimeElapsedSinceX(start) >= Timeout_st) return retvTimeout;
+        }
+    }
+    if((FLASH->SR & FLASH_SR_OPERR) or (FLASH->SR & FLASH_SR_PROGERR) or
+            (FLASH->SR & FLASH_SR_WRPERR) or (FLASH->SR & FLASH_SR_PGAERR) or
+            (FLASH->SR & FLASH_SR_SIZERR) or (FLASH->SR & FLASH_SR_PGSERR) or
+            (FLASH->SR & FLASH_SR_MISERR) or (FLASH->SR & FLASH_SR_FASTERR) or
+            (FLASH->SR & FLASH_SR_RDERR) or (FLASH->SR & FLASH_SR_OPTVERR)) {
+        return retvFail;
+    }
+    // Clear EOP if set
+    if(FLASH->SR & FLASH_SR_EOP) FLASH->SR |= FLASH_SR_EOP;
+    return retvOk;
+}
+#else
 static uint8_t GetStatus(void) {
     if(FLASH->SR & FLASH_SR_BSY) return retvBusy;
-#ifdef STM32L4XX
-    else if(FLASH->SR & FLASH_SR_PROGERR) return retvFail;
-    else if(FLASH->SR & FLASH_SR_WRPERR) return retvFail;
-#elif defined STM32L1XX
+#if defined STM32L1XX
     else if(FLASH->SR & FLASH_SR_WRPERR) return retvWriteProtect;
     else if(FLASH->SR & (uint32_t)0x1E00) return retvFail;
 #else
@@ -337,15 +401,7 @@ static uint8_t GetStatus(void) {
 #endif
     else return retvOk;
 }
-
-// Wait for a Flash operation to complete or a TIMEOUT to occur
-static uint8_t WaitForLastOperation(uint32_t Timeout) {
-    while(Timeout--) {
-        uint8_t status = GetStatus();
-        if(status != retvBusy) return status;
-    }
-    return retvTimeout;
-}
+#endif
 
 #if defined STM32L1XX
 // When properly executed, the unlocking sequence clears the PELOCK bit in the FLASH_PECR register
@@ -377,7 +433,8 @@ void LockFlash() {
 #if defined STM32L1XX
     FLASH->PECR |= FLASH_PECR_PRGLOCK;
 #else
-    FLASH->CR |= 0x00000080; // XXX
+    WaitForLastOperation(FLASH_ProgramTimeout);
+    FLASH->CR |= FLASH_CR_LOCK;
 #endif
 }
 
@@ -394,7 +451,14 @@ uint8_t ErasePage(uint32_t PageAddress) {
         FLASH->PECR &= ~FLASH_PECR_PROG;
         FLASH->PECR &= ~FLASH_PECR_ERASE;
 #elif defined STM32L4XX
-
+        ClearErrFlags();    // Clear all error programming flags
+        uint32_t Reg = FLASH->CR;
+        Reg &= ~(FLASH_CR_PNB | FLASH_CR_BKER);
+        Reg |= (PageAddress << FLASH_CR_PNB_Pos) | FLASH_CR_PER;
+        FLASH->CR = Reg;
+        FLASH->CR |= FLASH_CR_STRT;
+        status = WaitForLastOperation(FLASH_EraseTimeout);
+        FLASH->CR &= ~FLASH_CR_PER; // Disable the PageErase Bit
 #else
         FLASH->CR |= 0x00000002; // XXX
         FLASH->AR = PageAddress;
@@ -408,6 +472,32 @@ uint8_t ErasePage(uint32_t PageAddress) {
     return status;
 }
 
+#if defined STM32L4XX
+uint8_t ProgramDWord(uint32_t Address, uint64_t Data) {
+    uint8_t status = WaitForLastOperation(FLASH_ProgramTimeout);
+    if(status == retvOk) {
+        chSysLock();
+        ClearErrFlags();
+        // Deactivate the data cache to avoid data misbehavior
+        FLASH->ACR &= ~FLASH_ACR_DCEN;
+        // Program Dword
+        SET_BIT(FLASH->CR, FLASH_CR_PG);    // Enable flash writing
+        *(volatile uint32_t*)Address = (uint32_t)Data;
+        *(volatile uint32_t*)(Address + 4) = (uint32_t)(Data >> 32);
+        status = WaitForLastOperation(FLASH_ProgramTimeout);
+        FLASH->CR &= ~FLASH_CR_PG;          // Disable flash writing
+        // Flush the caches to be sure of the data consistency
+        FLASH->ACR |= FLASH_ACR_ICRST;      // }
+        FLASH->ACR &= ~FLASH_ACR_ICRST;     // } Reset instruction cache
+        FLASH->ACR |= FLASH_ACR_ICEN;       // Enable instruction cache
+        FLASH->ACR |= FLASH_ACR_DCRST;      // }
+        FLASH->ACR &= ~FLASH_ACR_DCRST;     // } Reset data cache
+        FLASH->ACR |= FLASH_ACR_DCEN;       // Enable data cache
+        chSysUnlock();
+    }
+    return status;
+}
+#else
 uint8_t ProgramWord(uint32_t Address, uint32_t Data) {
     uint8_t status = WaitForLastOperation(FLASH_ProgramTimeout);
     if(status == retvOk) {
@@ -430,16 +520,6 @@ uint8_t ProgramWord(uint32_t Address, uint32_t Data) {
 #endif
     }
     return status;
-}
-
-void ClearPendingFlags() {
-#ifdef STM32L1XX
-    FLASH->SR = FLASH_SR_EOP | FLASH_SR_PGAERR | FLASH_SR_WRPERR;
-#elif defined STM32L4XX
-    FLASH->SR = FLASH_SR_EOP | FLASH_SR_PROGERR | FLASH_SR_WRPERR;
-#else
-    FLASH->SR = FLASH_SR_EOP | FLASH_SR_PGERR | FLASH_SR_WRPRTERR;
-#endif
 }
 
 uint8_t ProgramBuf(void *PData, uint32_t ByteSz, uint32_t Addr) {
@@ -471,6 +551,7 @@ uint8_t ProgramBuf(void *PData, uint32_t ByteSz, uint32_t Addr) {
     chSysUnlock();
     return status;
 }
+#endif
 
 // ==== Option bytes ====
 void UnlockOptionBytes() {
@@ -500,7 +581,7 @@ void LockOptionBytes() {
 }
 
 void WriteOptionByteRDP(uint8_t Value) {
-    chSysLock();
+    UnlockFlash();
     ClearPendingFlags();
     UnlockOptionBytes();
     if(WaitForLastOperation(FLASH_ProgramTimeout) == retvOk) {
@@ -512,7 +593,12 @@ void WriteOptionByteRDP(uint8_t Value) {
         *(volatile uint32_t*)0x1FF80000 = OptBytes;
         WaitForLastOperation(FLASH_ProgramTimeout);
 #elif defined STM32L4XX
-        // Not implemented for STM32L4xx
+        uint32_t OptReg = FLASH->OPTR;
+        OptReg &= ~FLASH_OPTR_RDP_Msk;  // Clear RDP
+        OptReg |= Value;
+        FLASH->OPTR = OptReg;
+        FLASH->CR |= FLASH_CR_OPTSTRT;
+        WaitForLastOperation(FLASH_ProgramTimeout);
 #else
         // Erase option bytes
         SET_BIT(FLASH->CR, FLASH_CR_OPTER);
@@ -528,7 +614,7 @@ void WriteOptionByteRDP(uint8_t Value) {
 #endif
     }
     LockOptionBytes();
-    chSysUnlock();
+    LockFlash();
 }
 
 // ==== Firmare lock ====
@@ -543,6 +629,23 @@ bool FirmwareIsLocked() {
 }
 
 void LockFirmware() {
+    chSysLock();
+#ifdef STM32L4XX
+    UnlockFlash();
+    ClearPendingFlags();
+    UnlockOptionBytes();
+    if(WaitForLastOperation(FLASH_ProgramTimeout) == retvOk) {
+        // Deactivate the data cache to avoid data misbehavior
+        FLASH->ACR &= ~FLASH_ACR_DCEN;
+        // Any value except 0xAA or 0xCC
+        MODIFY_REG(FLASH->OPTR, FLASH_OPTR_RDP_Msk, 0x00);
+        SET_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
+        WaitForLastOperation(FLASH_ProgramTimeout);
+        CLEAR_BIT(FLASH->CR, FLASH_CR_OPTSTRT);
+        FLASH->CR |= FLASH_CR_OBL_LAUNCH;   // cannot be written when option bytes are locked
+        LockFlash();    // Will lock option bytes too
+    }
+#else
     WriteOptionByteRDP(0x1D); // Any value except 0xAA or 0xCC
     // Set the OBL_Launch bit to reset system and launch the option byte loading
 #ifdef STM32L1XX
@@ -550,7 +653,32 @@ void LockFirmware() {
 #else
     SET_BIT(FLASH->CR, FLASH_CR_OBL_LAUNCH);
 #endif
+#endif
+    chSysUnlock();
 }
+
+// ==== Dualbank ====
+#if defined STM32L4XX
+bool DualbankIsEnabled() {
+    return (FLASH->OPTR & FLASH_OPTR_DUALBANK);
+}
+void DisableDualbank() {
+    chSysLock();
+    UnlockFlash();
+    ClearPendingFlags();
+    UnlockOptionBytes();
+    if(WaitForLastOperation(FLASH_ProgramTimeout) == retvOk) {
+        uint32_t OptReg = FLASH->OPTR;
+        OptReg &= ~(FLASH_OPTR_DUALBANK | FLASH_OPTR_BFB2);
+        FLASH->OPTR = OptReg;
+        FLASH->CR |= FLASH_CR_OPTSTRT;
+        WaitForLastOperation(FLASH_ProgramTimeout);
+        SET_BIT(FLASH->CR, FLASH_CR_OBL_LAUNCH); // cannot be written when option bytes are locked
+        LockFlash();
+    }
+    chSysUnlock();
+}
+#endif
 
 }; // Namespace FLASH
 #endif
@@ -772,8 +900,8 @@ void Vector5C() {
 } // extern c
 #endif
 
-#if 1
-namespace Convert { // ============== Conversion operations ====================
+#if 1 // ============== Conversion operations ====================
+namespace Convert {
 void U16ToArrAsBE(uint8_t *PArr, uint16_t N) {
     uint8_t *p8 = (uint8_t*)&N;
     *PArr++ = *(p8 + 1);
@@ -1691,34 +1819,47 @@ void Clk_t::SetupFlashLatency(uint8_t AHBClk_MHz, MCUVoltRange_t VoltRange) {
 //    while(FLASH->ACR != tmp);
 }
 
-void Clk_t::SetHiPerfMode() {
-    if(HiPerfModeEnabled) return;
-    __unused uint8_t Rslt = retvFail;
-    // Try to enable HSE
-    if(EnableHSE() == retvOk) {
+void Clk_t::SetCoreClk(CoreClk_t CoreClk) {
+    EnablePrefeth();
+    // Enable/disable HSE
+    if(CoreClk >= cclk16MHz) {
+        if(EnableHSE() != retvOk) return;   // Try to enable HSE
+        SetVoltageRange(mvrHiPerf);
+        DisablePLL();
+    }
+    // Setup dividers
+    switch(CoreClk) {
+        case cclk8MHz:
+            break;
         // Setup PLL (must be disabled first)
-//        if(SetupPllMulDiv(1, 24, 4, 6) == retvOk) { // 12MHz / 1 * 24 => 72 and 48MHz
-//        if(SetupPllMulDiv(1, 8, 2, 2) == retvOk) { // 12MHz / 1 * 8 / 2 => 48 and 48MHz
-//        if(SetupPllMulDiv(1, 8, 6, 2) == retvOk) { // 12MHz / 1 * 8 / (6 and 2) => 16 and 48MHz
-        if(SetupPllMulDiv(1, 8, 4, 2) == retvOk) { // 12MHz / 1 * 8 / (4 and 2) => 24 and 48MHz
-            SetupBusDividers(ahbDiv1, apbDiv1, apbDiv1);
-            SetVoltageRange(mvrHiPerf);
-            SetupFlashLatency(24, mvrHiPerf);   // !!! Don't forget change this
-            EnablePrefeth();
-            // Switch clock
-            if(EnablePLL() == retvOk) {
-                if(SwitchToPLL() == retvOk) {
-                    Rslt = retvOk;
-                    HiPerfModeEnabled = true;
-                } // sw 2 PLL
-            } // en PLL
-        } // if setup pll div
-    } // if Enable HSE
+        case cclk16MHz:
+            // 12MHz / 1 * 8 / (6 and 2) => 16 and 48MHz
+            if(SetupPllMulDiv(1, 8, 6, 2) != retvOk) return;
+            SetupFlashLatency(16, mvrHiPerf);
+            break;
+        case cclk24MHz:
+            // 12MHz / 1 * 8 / (4 and 2) => 24 and 48MHz
+            if(SetupPllMulDiv(1, 8, 4, 2) != retvOk) return;
+            SetupFlashLatency(24, mvrHiPerf);
+            break;
+        case cclk48MHz:
+            // 12MHz / 1 * 8 / 2 => 48 and 48MHz
+            if(SetupPllMulDiv(1, 8, 2, 2) != retvOk) return;
+            SetupFlashLatency(48, mvrHiPerf);
+            break;
+        case cclk72MHz:
+            // 12MHz / 1 * 24 => 72 and 48MHz
+            if(SetupPllMulDiv(1, 24, 4, 6) != retvOk) return;
+            SetupFlashLatency(72, mvrHiPerf);
+            break;
+    } // switch
+
+    if(CoreClk >= cclk16MHz) {
+        SetupBusDividers(ahbDiv1, apbDiv1, apbDiv1);
+        if(EnablePLL() == retvOk) SwitchToPLL();
+    }
 }
 
-void Clk_t::SetLoPerfMode() {
-
-}
 
 void Clk_t::SetVoltageRange(MCUVoltRange_t VoltRange) {
     uint32_t tmp = PWR->CR1;

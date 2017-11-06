@@ -105,7 +105,6 @@ struct Color_t {
         R = ClrMix(Fore.R, Back.R, Brt);
         G = ClrMix(Fore.G, Back.G, Brt);
         B = ClrMix(Fore.B, Back.B, Brt);
-        W = ClrMix(Fore.W, Back.W, Brt);
     }
     uint32_t DelayToNextAdj(const Color_t &AClr, uint32_t SmoothValue) {
         uint32_t Delay, Delay2;
@@ -232,6 +231,7 @@ struct ColorHSV_t {
     }
 
     ColorHSV_t(uint16_t AH, uint8_t AS, uint8_t AV) : H(AH), S(AS), V(AV) {}
+    ColorHSV_t(const ColorHSV_t &AClr) : H(AClr.H), S(AClr.S), V(AClr.V) {}
 } __attribute__((packed));
 
 // Colors
