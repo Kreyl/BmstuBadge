@@ -14,6 +14,7 @@
 #include "kl_sd.h"
 #include "kl_fs_utils.h"
 #include "SimpleSensors.h"
+#include "axp.h"
 
 // Forever
 EvtMsgQ_t<EvtMsg_t, MAIN_EVT_Q_LEN> EvtQMain;
@@ -22,6 +23,8 @@ void OnCmd(Shell_t *PShell);
 void ITask();
 
 LedRGB_t Led { LED_RED_CH, LED_GREEN_CH, LED_BLUE_CH };
+
+axp_t axp;
 
 int main(void) {
     // ==== Setup clock frequency ====
@@ -39,17 +42,18 @@ int main(void) {
 
     Led.Init();
     Led.StartOrRestart(lsqStart);
-
-
-    uint32_t check=15;
-	Printf("check=%u",check);
     i2c3.Init();
-    uint8_t axpAddr = 0x68;
 
-//	Printf("check=\r%u",check);
-//    check=i2c3.CheckAddress(axpAddr);
-//	Printf("check=\r%u",check);
-//
+
+    i2c3.ScanBus();
+    axp.init(&i2c3);
+    axp.turnLDO24DCDC3();
+    uint8_t status=axp.readStatusRegister();
+    Printf("\r status= %u\n",status);
+    axp.setDCDC3milliVoltage(3300);
+    axp.setLDO24Voltage
+
+
 //    uint8_t write_outputControl[]={0x12,0x0E};
 //    uint8_t write_dcdc3Voltage[]={0x27,0x68};
 //    uint8_t write_ldo24Voltage[]={0x28,0xFA};

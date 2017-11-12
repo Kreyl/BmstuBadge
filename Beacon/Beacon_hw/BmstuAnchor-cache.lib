@@ -524,11 +524,11 @@ X ~ 1 0 0 50 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# Zener
+# Zener-RESCUE-BmstuAnchor
 #
-DEF Zener D 0 40 N N 1 F N
+DEF Zener-RESCUE-BmstuAnchor D 0 40 N N 1 F N
 F0 "D" 0 100 40 H V C CNN
-F1 "Zener" 0 -100 40 H V C CNN
+F1 "Zener-RESCUE-BmstuAnchor" 0 -100 40 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
