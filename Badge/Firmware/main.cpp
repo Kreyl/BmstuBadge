@@ -15,6 +15,7 @@
 #include "kl_fs_utils.h"
 #include "SimpleSensors.h"
 #include "axp.h"
+#include "ILI9488.h"
 
 // Forever
 EvtMsgQ_t<EvtMsg_t, MAIN_EVT_Q_LEN> EvtQMain;
@@ -25,6 +26,8 @@ void ITask();
 LedRGB_t Led { LED_RED_CH, LED_GREEN_CH, LED_BLUE_CH };
 
 axp_t axp;
+
+ILI9488_t ili;
 
 int main(void) {
     // ==== Setup clock frequency ====
@@ -51,9 +54,9 @@ int main(void) {
     axp.turnOnDCDC3();
     uint8_t status=axp.readStatusRegister();
     Printf("\r status= %u\n",status);
-    axp.setDCDC3milliVoltage(3300);
+//    axp.setDCDC3milliVoltage(3300);
     axp.setLDO4To2500mV();
-    axp.setLDO2milliVoltage(3300);
+    axp.setLDO2milliVoltage(2800);
     axp.keyShortStartShortFinish();
     axp.readVBUSVoltage();
     axp.readVBUSCurrent();
@@ -63,7 +66,8 @@ int main(void) {
     axp.readIPSOUTVoltage();
     axp.readTemperature();
 
-
+    ili.Init();
+    ili.DrawRect(100, 100, 100, 100, clBlack);
 
 
 

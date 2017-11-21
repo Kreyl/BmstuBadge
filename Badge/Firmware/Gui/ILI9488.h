@@ -11,7 +11,7 @@
 #include "color.h"
 #include "board.h"
 
-class ILI9341_t {
+class ILI9488_t {
 private:
     void WriteCmd(uint8_t Cmd);
     void WriteData(uint16_t Data);
