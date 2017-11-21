@@ -10,41 +10,41 @@
 #include "uart.h"
 
 #if 1 // ==== Pin driving functions ====
-#define RstHi()  { PinSet  (LCD_RESET_GPIO, LCD_RESET_PIN); }
-#define RstLo()  { PinClear(LCD_RESET_GPIO, LCD_RESET_PIN); }
-#define CsHi()   { PinSet  (LCD_CSX_GPIO, LCD_CSX_PIN);     }
-#define CsLo()   { PinClear(LCD_CSX_GPIO, LCD_CSX_PIN);     }
-#define DcHi()   { PinSet  (LCD_DC_GPIO, LCD_DC_PIN); }
-#define DcLo()   { PinClear(LCD_DC_GPIO, LCD_DC_PIN); }
-#define WrHi()   { PinSet  (LCD_WR_GPIO, LCD_WR_PIN); }
-#define WrLo()   { PinClear(LCD_WR_GPIO, LCD_WR_PIN); }
-#define RdHi()   { PinSet  (LCD_RD_GPIO, LCD_RD_PIN); }
+//#define RstHi()  { PinSet  (LCD_RESET_GPIO, LCD_RESET_PIN); }
+//#define RstLo()  { PinClear(LCD_RESET_GPIO, LCD_RESET_PIN); }
+//#define CsHi()   { PinSet  (LCD_CSX_GPIO, LCD_CSX_PIN);     }
+//#define CsLo()   { PinClear(LCD_CSX_GPIO, LCD_CSX_PIN);     }
+//#define DcHi()   { PinSet  (LCD_DC_GPIO, LCD_DC_PIN); }
+//#define DcLo()   { PinClear(LCD_DC_GPIO, LCD_DC_PIN); }
+//#define WrHi()   { PinSet  (LCD_WR_GPIO, LCD_WR_PIN); }
+//#define WrLo()   { PinClear(LCD_WR_GPIO, LCD_WR_PIN); }
+//#define RdHi()   { PinSet  (LCD_RD_GPIO, LCD_RD_PIN); }
 #define RdLo()   { PinClear(LCD_RD_GPIO, LCD_RD_PIN); }
 #define Write(Value) PortSetValue(LCD_DATA_GPIO, Value)
 #endif
 
 void ILI9341_t::Init() {
     // ==== GPIO ====
-    PinSetupOut(LCD_RESET_GPIO, LCD_RESET_PIN, omPushPull);
-    PinSetupOut(LCD_CSX_GPIO,   LCD_CSX_PIN,   omPushPull);
-    PinSetupOut(LCD_DC_GPIO,    LCD_DC_PIN,    omPushPull, psHigh);
-    PinSetupOut(LCD_WR_GPIO,    LCD_WR_PIN,    omPushPull, psHigh);
-    PinSetupOut(LCD_RD_GPIO,    LCD_RD_PIN,   omPushPull, psHigh);
-    // Data port
-    PortInit(LCD_DATA_GPIO, omPushPull, pudNone, psHigh);
-    PortSetupOutput(LCD_DATA_GPIO);
-    // ==== Init LCD ====
-    // Initial signals
-    RstHi();
-    CsHi();
-    RdHi();
-    WrHi();
-    // Reset LCD
-    RstLo();
-    chThdSleepMilliseconds(4);
-    RstHi();
-    chThdSleepMilliseconds(54);
-    CsLo(); // Stay selected forever
+//    PinSetupOut(LCD_RESET_GPIO, LCD_RESET_PIN, omPushPull);
+//    PinSetupOut(LCD_CSX_GPIO,   LCD_CSX_PIN,   omPushPull);
+//    PinSetupOut(LCD_DC_GPIO,    LCD_DC_PIN,    omPushPull, psHigh);
+//    PinSetupOut(LCD_WR_GPIO,    LCD_WR_PIN,    omPushPull, psHigh);
+//    PinSetupOut(LCD_RD_GPIO,    LCD_RD_PIN,   omPushPull, psHigh);
+//    // Data port
+//    PortInit(LCD_DATA_GPIO, omPushPull, pudNone, psHigh);
+//    PortSetupOutput(LCD_DATA_GPIO);
+//    // ==== Init LCD ====
+//    // Initial signals
+//    RstHi();
+//    CsHi();
+//    RdHi();
+//    WrHi();
+//    // Reset LCD
+//    RstLo();
+//    chThdSleepMilliseconds(4);
+//    RstHi();
+//    chThdSleepMilliseconds(54);
+//    CsLo(); // Stay selected forever
 
     // Commands
     WriteCmd(0x11); // Sleep out
@@ -70,17 +70,17 @@ void ILI9341_t::Init() {
 }
 
 void ILI9341_t::WriteCmd(uint8_t Cmd) {
-    DcLo();
-    PortSetValue(LCD_DATA_GPIO, Cmd);
-    WrLo();
-    WrHi();
-    DcHi();
+//    DcLo();
+//    PortSetValue(LCD_DATA_GPIO, Cmd);
+//    WrLo();
+//    WrHi();
+//    DcHi();
 }
 
 void ILI9341_t::WriteData(uint16_t Data) {
-    PortSetValue(LCD_DATA_GPIO, Data);
-    WrLo();
-    WrHi();
+//    PortSetValue(LCD_DATA_GPIO, Data);
+//    WrLo();
+//    WrHi();
 }
 
 //uint16_t ILI9341_t::ReadData() {

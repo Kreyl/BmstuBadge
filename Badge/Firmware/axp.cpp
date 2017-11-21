@@ -106,37 +106,37 @@ uint8_t axp_t::readStatusRegister(){
 	return returnData;
 }
 
-void axp_t::setDCDC3milliVoltage(uint16_t milliVoltage){
-	uint16_t dataVoltage=(milliVoltage-700)*40;
-	uint8_t dataToWrite[]={reg_DCDC3_voltage,dataVoltage};
-	i2c->Write(axpAddress,dataToWrite,2);
+void axp_t::setDCDC3milliVoltage(uint16_t milliVoltage) {
+    uint16_t dataVoltage = (milliVoltage - 700) * 40;
+    uint8_t dataToWrite[] = { reg_DCDC3_voltage, (uint8_t)dataVoltage };
+    i2c->Write(axpAddress, dataToWrite, 2);
 }
 
 void axp_t::setLDO2milliVoltage(uint16_t milliVoltage){
 	uint8_t returnData;
-	i2c->WriteRead(axpAddress,&reg_PwrOutCtrl,1,&returnData,1);
-	uint16_t dataVoltage=(milliVoltage-1800)*10;
-	returnData&=0xFF;
-	returnData|=dataVoltage<<4;
-	uint8_t dataToWrite[]={reg_LDO24_voltage,returnData};
-	i2c->Write(axpAddress,dataToWrite,2);
+	i2c->WriteRead(axpAddress, &reg_LDO24_voltage, 1, &returnData, 1);
+	uint16_t dataVoltage = (milliVoltage - 1800) / 100;
+	returnData &= 0x0F;
+	returnData |= dataVoltage << 4;
+	uint8_t dataToWrite[2] = {reg_LDO24_voltage, returnData};
+	i2c->Write(axpAddress, dataToWrite, 2);
 }
 
-void axp_t::setLDO4To2500mV(){
-	uint8_t returnData;
-	i2c->WriteRead(axpAddress,&reg_PwrOutCtrl,1,&returnData,1);
-	returnData&=0xFF<<4;
-	returnData|=9;
-	uint8_t dataToWrite[]={reg_LDO24_voltage,returnData};
-	i2c->Write(axpAddress,dataToWrite,2);
+void axp_t::setLDO4To2500mV() {
+    uint8_t regData;
+    i2c->WriteRead(axpAddress, &reg_LDO24_voltage, 1, &regData, 1);
+    regData &= 0xF0;
+    regData |= 9;
+    uint8_t dataToWrite[] = { reg_LDO24_voltage, regData };
+    i2c->Write(axpAddress, dataToWrite, 2);
 }
 
-void axp_t::turnOnDCDC3(){
-	uint8_t returnData;
-	i2c->WriteRead(axpAddress,&reg_PwrOutCtrl,1,&returnData,1);
-	returnData|=1<<4; //mask for DCDC3
-	uint8_t dataToWrite[]={reg_PwrOutCtrl,returnData};
-	i2c->Write(axpAddress,dataToWrite,2);
+void axp_t::turnOnDCDC3() {
+    uint8_t returnData;
+    i2c->WriteRead(axpAddress, &reg_PwrOutCtrl, 1, &returnData, 1);
+    returnData |= 1 << 4; //mask for DCDC3
+    uint8_t dataToWrite[] = { reg_PwrOutCtrl, returnData };
+    i2c->Write(axpAddress, dataToWrite, 2);
 }
 
 void axp_t::turnOnLDO2(){
