@@ -6,6 +6,7 @@
  */
 
 #include "axp.h"
+#include "shell.h"
 
 uint8_t axpAddress = 0x34;
 
@@ -16,7 +17,8 @@ uint8_t reg_PwrOutCtrl				 	= 0x12;
 uint8_t reg_DCDC2_voltage 				= 0x23;
 uint8_t reg_DCDC2_LDO3_ramp 			= 0x25;
 uint8_t reg_DCDC3_voltage 				= 0x27;
-uint8_t reg_LDO23_voltage 				= 0x28;
+uint8_t reg_LDO24_voltage 				= 0x28;
+uint8_t reg_LDO3_voltage 				= 0x29;
 uint8_t reg_VBUS_IPSOUT_path 			= 0x30;
 uint8_t reg_shutdownVolage 				= 0x31;
 uint8_t reg_shutdown_batDetect_LEDCtrl	= 0x32;
@@ -69,8 +71,8 @@ uint8_t reg_VBUS_VoltageL	 			= 0x5B;
 uint8_t reg_VBUS_CurrentH	 			= 0x5C;
 uint8_t reg_VBUS_CurrentL	 			= 0x5D;
 
-uint8_t reg_intTemp_CurrentH 			= 0x5E;
-uint8_t reg_intTemp_CurrentL 			= 0x5F;
+uint8_t reg_intTempH 					= 0x5E;
+uint8_t reg_intTempL 					= 0x5F;
 uint8_t reg_TS_inputH	 				= 0x62;
 uint8_t reg_TS_inputL 					= 0x63;
 
@@ -93,9 +95,12 @@ uint8_t reg_IPSOutVoltageL	 			= 0x7F;
 
 void axp_t::init(i2c_t* pi2c){
 	this->i2c=pi2c;
+	uint8_t dataToWrite[]={reg_ADC_enableSet_1,0xFF};
+	i2c->Write(axpAddress,dataToWrite,2);
 }
 
 uint8_t axp_t::readStatusRegister(){
+
 	uint8_t returnData;
 	i2c->WriteRead(axpAddress,&reg_powerStatus,1,&returnData,1);
 	return returnData;
@@ -107,14 +112,123 @@ void axp_t::setDCDC3milliVoltage(uint16_t milliVoltage){
 	i2c->Write(axpAddress,dataToWrite,2);
 }
 
-void axp_t::turnLDO24DCDC3(){
+void axp_t::setLDO2milliVoltage(uint16_t milliVoltage){
+	uint8_t returnData;
+	i2c->WriteRead(axpAddress,&reg_PwrOutCtrl,1,&returnData,1);
+	uint16_t dataVoltage=(milliVoltage-1800)*10;
+	returnData&=0xFF;
+	returnData|=dataVoltage<<4;
+	uint8_t dataToWrite[]={reg_LDO24_voltage,returnData};
+	i2c->Write(axpAddress,dataToWrite,2);
+}
+
+void axp_t::setLDO4To2500mV(){
+	uint8_t returnData;
+	i2c->WriteRead(axpAddress,&reg_PwrOutCtrl,1,&returnData,1);
+	returnData&=0xFF<<4;
+	returnData|=9;
+	uint8_t dataToWrite[]={reg_LDO24_voltage,returnData};
+	i2c->Write(axpAddress,dataToWrite,2);
+}
+
+void axp_t::turnOnDCDC3(){
+	uint8_t returnData;
+	i2c->WriteRead(axpAddress,&reg_PwrOutCtrl,1,&returnData,1);
+	returnData|=1<<4; //mask for DCDC3
+	uint8_t dataToWrite[]={reg_PwrOutCtrl,returnData};
+	i2c->Write(axpAddress,dataToWrite,2);
+}
+
+void axp_t::turnOnLDO2(){
+	uint8_t returnData;
+	i2c->WriteRead(axpAddress,&reg_PwrOutCtrl,1,&returnData,1);
+	returnData|=1<<2; //mask for LDO2
+	uint8_t dataToWrite[]={reg_PwrOutCtrl,0x0E};
+	i2c->Write(axpAddress,dataToWrite,2);
+}
+void axp_t::turnOnLDO4(){
+	uint8_t returnData;
+	i2c->WriteRead(axpAddress,&reg_PwrOutCtrl,1,&returnData,1);
+	returnData|=1<<3; //mask for LDO4
 	uint8_t dataToWrite[]={reg_PwrOutCtrl,0x0E};
 	i2c->Write(axpAddress,dataToWrite,2);
 }
 
+void axp_t::keyShortStartShortFinish(){
+	uint8_t dataToWrite[]={reg_PEK_paramSet,0x0C};
+	i2c->Write(axpAddress,dataToWrite,2);
+}
 
+uint16_t axp_t::readVBUSVoltage(){
+	uint8_t returnDataH;
+	uint8_t returnDataL;
+	i2c->WriteRead(axpAddress,&reg_VBUS_VoltageH,1,&returnDataH,1);
+	i2c->WriteRead(axpAddress,&reg_VBUS_VoltageL,1,&returnDataL,1);
+	uint16_t returnData=(returnDataH<<4)|returnDataL;
+    Printf("\r VBUS voltage= %u*1.7mV\n",returnData);
+	return returnData;
 
+}
+uint16_t axp_t::readVBUSCurrent(){
+	uint8_t returnDataH;
+	uint8_t returnDataL;
+	i2c->WriteRead(axpAddress,&reg_VBUS_CurrentH,1,&returnDataH,1);
+	i2c->WriteRead(axpAddress,&reg_VBUS_CurrentL,1,&returnDataL,1);
+	uint16_t returnData=(returnDataH<<4)|returnDataL;
+    Printf("\r VBUS current= %u*0.375mA\n",returnData);
+	return returnData;
 
+}
+uint16_t axp_t::readACINVoltage(){
+	uint8_t returnDataH;
+	uint8_t returnDataL;
+	i2c->WriteRead(axpAddress,&reg_ACIN_VoltageH,1,&returnDataH,1);
+	i2c->WriteRead(axpAddress,&reg_ACIN_VoltageL,1,&returnDataL,1);
+	uint16_t returnData=(returnDataH<<4)|returnDataL;
+    Printf("\r ACIN voltage= %u*1.7mV\n",returnData);
+	return returnData;
+
+}
+uint16_t axp_t::readACINCurrent(){
+	uint8_t returnDataH;
+	uint8_t returnDataL;
+	i2c->WriteRead(axpAddress,&reg_ACIN_CurrentH,1,&returnDataH,1);
+	i2c->WriteRead(axpAddress,&reg_ACIN_CurrentL,1,&returnDataL,1);
+	uint16_t returnData=(returnDataH<<4)|returnDataL;
+    Printf("\r ACIN current= %u*0.625mV\n",returnData);
+	return returnData;
+
+}
+uint16_t axp_t::readTemperature(){
+	uint8_t returnDataH;
+	uint8_t returnDataL;
+	i2c->WriteRead(axpAddress,&reg_intTempH,1,&returnDataH,1);
+	i2c->WriteRead(axpAddress,&reg_intTempL,1,&returnDataL,1);
+	uint16_t returnData=(returnDataH<<4)|returnDataL;
+    Printf("\r internal temp= %u*0.1-144.7\n",returnData);
+	return returnData;
+
+}
+uint16_t axp_t::readBatVoltage(){
+	uint8_t returnDataH;
+	uint8_t returnDataL;
+	i2c->WriteRead(axpAddress,&reg_BatVoltageH,1,&returnDataH,1);
+	i2c->WriteRead(axpAddress,&reg_BatVoltageL,1,&returnDataL,1);
+	uint16_t returnData=(returnDataH<<4)|returnDataL;
+    Printf("\r Battery voltage= %u*1.1mV\n",returnData);
+	return returnData;
+
+}
+uint16_t axp_t::readIPSOUTVoltage(){
+	uint8_t returnDataH;
+	uint8_t returnDataL;
+	i2c->WriteRead(axpAddress,&reg_IPSOutVoltageH,1,&returnDataH,1);
+	i2c->WriteRead(axpAddress,&reg_IPSOutVoltageL,1,&returnDataL,1);
+	uint16_t returnData=(returnDataH<<4)|returnDataL;
+    Printf("\r Unstable voltage= %u*1.4mV\n",returnData);
+	return returnData;
+
+}
 
 
 

@@ -44,14 +44,27 @@ int main(void) {
     Led.StartOrRestart(lsqStart);
     i2c3.Init();
 
-
-    i2c3.ScanBus();
+    //i2c3.ScanBus();
     axp.init(&i2c3);
-    axp.turnLDO24DCDC3();
+    axp.turnOnLDO2();
+    axp.turnOnLDO4();
+    axp.turnOnDCDC3();
     uint8_t status=axp.readStatusRegister();
     Printf("\r status= %u\n",status);
     axp.setDCDC3milliVoltage(3300);
-    axp.setLDO24Voltage
+    axp.setLDO4To2500mV();
+    axp.setLDO2milliVoltage(3300);
+    axp.keyShortStartShortFinish();
+    axp.readVBUSVoltage();
+    axp.readVBUSCurrent();
+    axp.readACINVoltage();
+    axp.readACINCurrent();
+    axp.readBatVoltage();
+    axp.readIPSOUTVoltage();
+    axp.readTemperature();
+
+
+
 
 
 //    uint8_t write_outputControl[]={0x12,0x0E};

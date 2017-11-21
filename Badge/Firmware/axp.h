@@ -24,7 +24,19 @@ public:
 	void init(i2c_t* pi2c);
 	uint8_t readStatusRegister();
 	void setDCDC3milliVoltage(uint16_t milliVoltage);
-	void turnLDO24DCDC3();
+	void setLDO2milliVoltage(uint16_t milliVoltage);
+	void setLDO4To2500mV();
+	void turnOnLDO2();
+	void turnOnLDO4();
+	void turnOnDCDC3();
+	void keyShortStartShortFinish();
+	uint16_t readVBUSVoltage();
+	uint16_t readVBUSCurrent();
+	uint16_t readACINVoltage();
+	uint16_t readACINCurrent();
+	uint16_t readTemperature();
+	uint16_t readBatVoltage();
+	uint16_t readIPSOUTVoltage();
 
 };
 
