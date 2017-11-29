@@ -8,12 +8,13 @@
 #include <Gui/ILI9488.h>
 #include "board.h"
 #include "uart.h"
+//#include "images.h"
 
 #if 1 // ==== Pin driving functions ====
 #define RstHi()  { PinSetHi(LCD_RESET); }
 #define RstLo()  { PinSetLo(LCD_RESET); }
-#define CsHi()   { PinSetHi(LCD_RESET); }
-#define CsLo()   { PinSetLo(LCD_RESET); }
+#define CsHi()   { PinSetHi(LCD_CS); }
+#define CsLo()   { PinSetLo(LCD_CS); }
 #define DcHi()   { PinSetHi(LCD_DC); }
 #define DcLo()   { PinSetLo(LCD_DC); }
 #define WrHi()   { PinSetHi(LCD_WR); }
@@ -39,32 +40,40 @@ void ILI9488_t::Init() {
     CsHi();
     RdHi();
     WrHi();
+    chThdSleepMilliseconds(10);
     // Reset LCD
     RstLo();
-    chThdSleepMilliseconds(4);
+    chThdSleepMilliseconds(50);
     RstHi();
-    chThdSleepMilliseconds(54);
+    chThdSleepMilliseconds(500);
     CsLo(); // Stay selected forever
+    chThdSleepMilliseconds(100);
 
     // Commands
     WriteCmd(0x11); // Sleep out
-    chThdSleepMilliseconds(126);
+    chThdSleepMilliseconds(500);
 
     WriteCmd(0x29); // Display ON
     // Row order etc.
     WriteCmd(0x36);
-    WriteData(0xE8);    // MY, MX, Row/Column exchange, BGR
+    WriteData(0xe8);    // previous: 0xe8 - MY, MX, Row/Column exchange, BGR
     // Pixel format
     WriteCmd(0x3A);
     WriteData(0x55);    // 16 bit both RGB & MCU
 
-    WriteCmd(0x09);
+    chThdSleepMilliseconds(500);
+
+//    WriteCmd(0x51);
+//    WriteData(0xAA);
+//    chThdSleepMilliseconds(50);
+
+    WriteCmd(0x54);
     PortSetupInput(LCD_DATA_GPIO);
-    for(uint8_t i=0; i<4; i++) {
+    for(uint8_t i=0; i<5; i++) {
         RdLo();
         RdHi();
         uint16_t r = LCD_DATA_GPIO->IDR;
-        Printf("Lcd: %X\r", r);
+        Printf("\rLcd: %X", r);
     }
     PortSetupOutput(LCD_DATA_GPIO);
 }
@@ -123,6 +132,7 @@ void ILI9488_t::DrawRect(uint32_t Left, uint32_t Top, uint32_t Width, uint32_t H
     uint32_t Cnt = Width * Height;
     PrepareToWriteGRAM();
     while(Cnt--) WriteData(Color565);
+    WriteCmd(0x00);
 }
 
 void ILI9488_t::DrawRect(uint32_t Left, uint32_t Top, uint32_t Width, uint32_t Height, Color_t Color) {
@@ -132,6 +142,7 @@ void ILI9488_t::DrawRect(uint32_t Left, uint32_t Top, uint32_t Width, uint32_t H
     // Fill LCD
     PrepareToWriteGRAM();
     while(Cnt--) WriteData(Clr565);
+    WriteCmd(0x00);
 }
 
 void ILI9488_t::DrawPoint (uint32_t x, uint32_t y, Color_t Color) {
@@ -152,4 +163,33 @@ void ILI9488_t::DrawLineVert (uint32_t x0, uint32_t y0, uint32_t Len, Color_t Co
     uint16_t Clr565 = Color.RGBTo565();
     PrepareToWriteGRAM();
     while(Len--) WriteData(Clr565);
+}
+
+//void ILI9488_t::DrawImage(uint16_t Left, uint16_t Top) {
+//	uint16_t Width = (image[19] << 8) | image[18] + 1;
+//	uint16_t Height = (image[23] << 8) | image[22];
+//	SetBounds(Left, Top, Width, Height);
+//	uint32_t Cnt = Width * Height;
+//	uint16_t Position = image[10];
+//
+//	PrepareToWriteGRAM();
+//	while (Cnt--) {
+//		uint16_t data2Write = (image[Position+1] << 8) | image[Position];
+//		WriteData(data2Write);
+//		Position+=2;
+//	}
+//}
+
+
+void ILI9488_t::DrawImage(uint16_t Left, uint16_t Top, uint16_t Width, uint16_t Height, uint8_t *image) {
+	SetBounds(Left, Top, Width, Height);
+	uint32_t Cnt = Width * Height;
+	uint16_t Position = 0;
+
+	PrepareToWriteGRAM();
+	while (Cnt--) {
+		uint16_t data2Write = (image[Position+1] << 8) | image[Position];
+		WriteData(data2Write);
+		Position+=2;
+	}
 }

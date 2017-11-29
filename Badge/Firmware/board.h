@@ -80,12 +80,17 @@
 // Radio: SPI, PGpio, Sck, Miso, Mosi, Cs, Gdo0
 #define CC_Setup0       SPI1, GPIOA, 5,6,7, 4, 3
 
+//LCD
 #define LCD_DATA_GPIO   GPIOB
 #define LCD_RESET       GPIOC, 3
 #define LCD_CS          GPIOE, 0
 #define LCD_DC          GPIOE, 1
 #define LCD_WR          GPIOC, 6
 #define LCD_RD          GPIOC, 7
+
+// Touch
+#define TOUCH_INT_GPIO  GPIOC
+#define TOUCH_INT_PIN   2
 
 
 #endif // GPIO

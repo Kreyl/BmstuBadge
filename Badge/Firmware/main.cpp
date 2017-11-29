@@ -16,6 +16,8 @@
 #include "SimpleSensors.h"
 #include "axp.h"
 #include "ILI9488.h"
+#include "stmpe811.h"
+#include "ImageBMP.h"
 
 // Forever
 EvtMsgQ_t<EvtMsg_t, MAIN_EVT_Q_LEN> EvtQMain;
@@ -28,17 +30,20 @@ LedRGB_t Led { LED_RED_CH, LED_GREEN_CH, LED_BLUE_CH };
 axp_t axp;
 
 ILI9488_t ili;
+ImageBMP_t Image;
+
 
 int main(void) {
     // ==== Setup clock frequency ====
-    Clk.Select48MhzSrc(src48PllQ);
     Clk.UpdateFreqValues();
+    Clk.Select48MhzSrc(src48Msi);
 
     // Init OS
     halInit();
     chSysInit();
     // ==== Init hardware ====
     EvtQMain.Init();
+
     Uart.Init(115200);
     Printf("\r%S %S\r\n", APP_NAME, BUILD_TIME);
     Clk.PrintFreqs();
@@ -56,7 +61,7 @@ int main(void) {
     Printf("\r status= %u\n",status);
 //    axp.setDCDC3milliVoltage(3300);
     axp.setLDO4To2500mV();
-    axp.setLDO2milliVoltage(2800);
+    axp.setLDO2milliVoltage(3200);
     axp.keyShortStartShortFinish();
     axp.readVBUSVoltage();
     axp.readVBUSCurrent();
@@ -66,21 +71,13 @@ int main(void) {
     axp.readIPSOUTVoltage();
     axp.readTemperature();
 
-    ili.Init();
-    ili.DrawRect(100, 100, 100, 100, clBlack);
 
-
-
-//    uint8_t write_outputControl[]={0x12,0x0E};
-//    uint8_t write_dcdc3Voltage[]={0x27,0x68};
-//    uint8_t write_ldo24Voltage[]={0x28,0xFA};
-//    uint8_t write_testPowerButton[]={0x36,0x0F};
-//    i2c3.Write(axpAddr,write_outputControl,2);
-//    i2c3.Write(axpAddr,write_dcdc3Voltage,2);
-//    i2c3.Write(axpAddr,write_ldo24Voltage,2);
-//    i2c3.Write(axpAddr,write_testPowerButton,2);
+//    ili.DrawImage(160,100);
+    Touch.Init(&i2c3);
 
     SD.Init();
+    Image.Init();
+    Image.ShowImage(160, 100, "image.bmp");
 
 //    SimpleSensors::Init();
 
