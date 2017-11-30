@@ -90,7 +90,10 @@ void ImageBMP_t::Init() {
 //    chThdCreateStatic(waAudioThread, sizeof(waAudioThread), NORMALPRIO, (tfunc_t)AudioThread, NULL);
 }
 
+static uint8_t IBuf[80000];
+
 uint8_t ImageBMP_t::ShowImage(uint16_t Top, uint16_t Left, const char* AFileName) {
+    systime_t Start;
     // Try to open file
     if(OpenBMP(AFileName) != retvOk) return retvFail;
 
@@ -98,16 +101,24 @@ uint8_t ImageBMP_t::ShowImage(uint16_t Top, uint16_t Left, const char* AFileName
     char ChunkID[2] = {0, 0};
     uint32_t ImageSize = Info.ImageWidth * Info.ImageHeight;
 
-    uint8_t *ImageBuffer = nullptr;
-    ImageBuffer = new uint8_t [ImageSize];
-    uint32_t BufferPtr = 0;
+    if(ImageSize > 80000) ImageSize = 80000;
+
+    uint8_t *ImageBuffer = IBuf;
+//    ImageBuffer = new uint8_t [ImageSize];
+//    uint32_t BufferPtr = 0;
 
     if(f_lseek(&IFile, Info.DataBitsOffset) != FR_OK) goto end;
     if(TryRead(&IFile, ChunkID, 2) != retvOk) goto end;
 
-   while(ImageSize--) if(TryRead(&IFile, &ImageBuffer[BufferPtr++], 1) != retvOk) goto end;
-   Printf("image saved locally");
-   ili.DrawImage((uint32_t)Top, (uint32_t)Left, Info.ImageWidth, Info.ImageHeight, ImageBuffer);
+    Start = chVTGetSystemTimeX();
+    //while(ImageSize--) if(TryRead(&IFile, &ImageBuffer[BufferPtr++], 1) != retvOk) goto end;
+    if(TryRead(&IFile, ImageBuffer, ImageSize) != retvOk) goto end;
+
+    Printf("Load: %u\r", ST2MS(chVTGetSystemTimeX() - Start));
+//    Printf("image saved locally");
+    Start = chVTGetSystemTimeX();
+    ili.DrawImage((uint32_t)Top, (uint32_t)Left, Info.ImageWidth, Info.ImageHeight, ImageBuffer);
+    Printf("Draw: %u\r", ST2MS(chVTGetSystemTimeX() - Start));
 
 //    if(memcmp(ChunkID, "data", 4) == 0) {  // "data" found
 //        // Read first buf
@@ -125,11 +136,11 @@ uint8_t ImageBMP_t::ShowImage(uint16_t Top, uint16_t Left, const char* AFileName
 //        }
 //    }
     f_close(&IFile);
-    delete [] ImageBuffer;
+//    delete [] ImageBuffer;
     return retvOk;
 
     end:
-    delete [] ImageBuffer;
+//    delete [] ImageBuffer;
     f_close(&IFile);
     return retvFail;
 }
@@ -162,7 +173,6 @@ uint8_t ImageBMP_t::OpenBMP(const char* AFileName) {
     if(TryRead<uint16_t>(&IFile, &Info.BitsPerPixel) != retvOk) goto end;
 
     Info.ImageWidth++;
-    Info.ImageHeight;
 
     Printf("File Size: %X\r", Info.FileSize);
     Printf("Offset: %X\r", Info.DataBitsOffset);

@@ -24,6 +24,13 @@
 #define Write(Value) PortSetValue(LCD_DATA_GPIO, Value)
 #endif
 
+__always_inline
+static inline void WriteData(uint16_t Data) {
+    PortSetValue(LCD_DATA_GPIO, Data);
+    WrLo();
+    WrHi();
+}
+
 void ILI9488_t::Init() {
     // ==== GPIO ====
     PinSetupOut(LCD_RESET, omPushPull);
@@ -45,13 +52,13 @@ void ILI9488_t::Init() {
     RstLo();
     chThdSleepMilliseconds(50);
     RstHi();
-    chThdSleepMilliseconds(500);
+    chThdSleepMilliseconds(120);
     CsLo(); // Stay selected forever
     chThdSleepMilliseconds(100);
 
     // Commands
     WriteCmd(0x11); // Sleep out
-    chThdSleepMilliseconds(500);
+    chThdSleepMilliseconds(5);
 
     WriteCmd(0x29); // Display ON
     // Row order etc.
@@ -61,7 +68,7 @@ void ILI9488_t::Init() {
     WriteCmd(0x3A);
     WriteData(0x55);    // 16 bit both RGB & MCU
 
-    chThdSleepMilliseconds(500);
+    chThdSleepMilliseconds(4);
 
 //    WriteCmd(0x51);
 //    WriteData(0xAA);
@@ -73,7 +80,7 @@ void ILI9488_t::Init() {
         RdLo();
         RdHi();
         uint16_t r = LCD_DATA_GPIO->IDR;
-        Printf("\rLcd: %X", r);
+        Printf("Lcd: %X\r", r);
     }
     PortSetupOutput(LCD_DATA_GPIO);
 }
@@ -84,12 +91,6 @@ void ILI9488_t::WriteCmd(uint8_t Cmd) {
     WrLo();
     WrHi();
     DcHi();
-}
-
-void ILI9488_t::WriteData(uint16_t Data) {
-    PortSetValue(LCD_DATA_GPIO, Data);
-    WrLo();
-    WrHi();
 }
 
 //uint16_t ILI9341_t::ReadData() {
@@ -183,13 +184,12 @@ void ILI9488_t::DrawLineVert (uint32_t x0, uint32_t y0, uint32_t Len, Color_t Co
 
 void ILI9488_t::DrawImage(uint16_t Left, uint16_t Top, uint16_t Width, uint16_t Height, uint8_t *image) {
 	SetBounds(Left, Top, Width, Height);
-	uint32_t Cnt = Width * Height;
-	uint16_t Position = 0;
+	uint32_t Cnt = (Width * Height);
+
+	uint16_t *ptr = (uint16_t*)image;
 
 	PrepareToWriteGRAM();
 	while (Cnt--) {
-		uint16_t data2Write = (image[Position+1] << 8) | image[Position];
-		WriteData(data2Write);
-		Position+=2;
+		WriteData(*ptr++);
 	}
 }

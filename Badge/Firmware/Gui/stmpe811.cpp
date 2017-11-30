@@ -86,7 +86,7 @@ void STMPE811_t::Init(i2c_t* pi2c) {
     Write(STMPE811_SYS_CTRL2, 0x0C);
     Write(STMPE811_INT_EN, 0x00);       // Interrupts disable
     // ADC conversion time = 80 clock ticks, 12-bit ADC, internal voltage refernce
-    Write(STMPE811_ADC_CTRL1, 0x49);
+    Write(STMPE811_ADC_CTRL1, 0x4C);
     chThdSleepMilliseconds(2);
     Write(STMPE811_ADC_CTRL2, 0x01);    // Select the ADC clock speed: 3.25 MHz
     Write(STMPE811_GPIO_AF, 0xFF);      // GPIO alternate function - OFF
@@ -125,9 +125,13 @@ uint8_t STMPE811_t::ReadData() {
     X = lroundf(CLBR_X(FY));
     Y = lroundf(CLBR_Y(FX));
     chSysUnlock();
-    Printf("tch: %d %d; %d %d\r", FX, FY, X, Y);
-    Printf("tch: %d %d %d\r", FX, FY, Data[3]);
-    Printf("tch: %d %d %X\r", FX, FY, Data[0] & 0x80);
+
+    uint8_t tmp;
+    Read(STMPE811_TSC_CTRL, &tmp, 1);
+//    Printf("%X\r", tmp);
+//    Printf("tch: %d %d; %d %d\r", FX, FY, X, Y);
+    Printf("tch: %d %d %d %d %d\r", FX, FY, Data[0], Data[1], Data[2]);
+//    Printf("tch: %d %d %X\r", FX, FY, Data[0] & 0x80);
     return retvNew;
 }
 

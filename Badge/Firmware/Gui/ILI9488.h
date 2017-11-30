@@ -14,7 +14,6 @@
 class ILI9488_t {
 public:
     void WriteCmd(uint8_t Cmd);
-    void WriteData(uint16_t Data);
 //    uint16_t ReadData();
     void SetBounds(uint16_t Left, uint16_t Top, uint16_t Width, uint16_t Height);
     void PrepareToWriteGRAM() { WriteCmd(0x2C); }

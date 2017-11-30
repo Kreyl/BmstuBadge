@@ -75,9 +75,14 @@ int main(void) {
 //    ili.DrawImage(160,100);
     Touch.Init(&i2c3);
 
-    SD.Init();
-    Image.Init();
-    Image.ShowImage(160, 100, "image.bmp");
+    while(true) {
+        Touch.ReadData();
+        chThdSleepMilliseconds(450);
+    }
+
+//    SD.Init();
+//    Image.Init();
+//    Image.ShowImage(160, 100, "ostranna.bmp");
 
 //    SimpleSensors::Init();
 
