@@ -63,7 +63,7 @@ void ILI9488_t::Init() {
     WriteCmd(0x29); // Display ON
     // Row order etc.
     WriteCmd(0x36);
-    WriteData(0xe8);    // previous: 0xe8 - MY, MX, Row/Column exchange, BGR
+    WriteData(0xb8);    // MY, Row/Column exchange, BGR
     // Pixel format
     WriteCmd(0x3A);
     WriteData(0x55);    // 16 bit both RGB & MCU
@@ -76,12 +76,12 @@ void ILI9488_t::Init() {
 
     WriteCmd(0x54);
     PortSetupInput(LCD_DATA_GPIO);
-    for(uint8_t i=0; i<5; i++) {
-        RdLo();
-        RdHi();
-        uint16_t r = LCD_DATA_GPIO->IDR;
-        Printf("Lcd: %X\r", r);
-    }
+//    for(uint8_t i=0; i<5; i++) {
+//        RdLo();
+//        RdHi();
+//        uint16_t r = LCD_DATA_GPIO->IDR;
+//        Printf("Lcd: %X\r", r);
+//    }
     PortSetupOutput(LCD_DATA_GPIO);
 }
 

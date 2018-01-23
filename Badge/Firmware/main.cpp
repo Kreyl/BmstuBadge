@@ -15,9 +15,8 @@
 #include "kl_fs_utils.h"
 #include "SimpleSensors.h"
 #include "axp.h"
-#include "ILI9488.h"
-#include "stmpe811.h"
 #include "ImageBMP.h"
+#include "gui_engine.h"
 
 // Forever
 EvtMsgQ_t<EvtMsg_t, MAIN_EVT_Q_LEN> EvtQMain;
@@ -29,7 +28,6 @@ LedRGB_t Led { LED_RED_CH, LED_GREEN_CH, LED_BLUE_CH };
 
 axp_t axp;
 
-ILI9488_t ili;
 ImageBMP_t Image;
 
 
@@ -57,37 +55,36 @@ int main(void) {
     axp.turnOnLDO2();
     axp.turnOnLDO4();
     axp.turnOnDCDC3();
-    uint8_t status=axp.readStatusRegister();
-    Printf("\r status= %u\n",status);
+//    uint8_t status=axp.readStatusRegister();
+//    Printf("\r status= %u\n",status);
 //    axp.setDCDC3milliVoltage(3300);
-    axp.setLDO4To2500mV();
-    axp.setLDO2milliVoltage(3200);
-    axp.keyShortStartShortFinish();
-    axp.readVBUSVoltage();
-    axp.readVBUSCurrent();
-    axp.readACINVoltage();
-    axp.readACINCurrent();
-    axp.readBatVoltage();
-    axp.readIPSOUTVoltage();
-    axp.readTemperature();
+//    axp.setLDO4To2500mV();
+//    axp.setLDO2milliVoltage(3200);
+//    axp.keyShortStartShortFinish();
+//    axp.readVBUSVoltage();
+//    axp.readVBUSCurrent();
+//    axp.readACINVoltage();
+//    axp.readACINCurrent();
+//    axp.readBatVoltage();
+//    axp.readIPSOUTVoltage();
+//    axp.readTemperature();
 
 
 //    ili.DrawImage(160,100);
     Touch.Init(&i2c3);
+    SD.Init();
+    Image.Init();
 
-    while(true) {
-        Touch.ReadData();
-        chThdSleepMilliseconds(450);
-    }
+    Gui.Init();
 
-//    SD.Init();
-//    Image.Init();
+
+
 //    Image.ShowImage(160, 100, "ostranna.bmp");
 
 //    SimpleSensors::Init();
 
     // Main cycle
-//    ITask();
+    ITask();
 }
 
 __noreturn

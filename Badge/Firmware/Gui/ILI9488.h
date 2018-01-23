@@ -13,6 +13,8 @@
 
 class ILI9488_t {
 public:
+	const uint32_t Width = 480;
+	const uint32_t Height = 320;
     void WriteCmd(uint8_t Cmd);
 //    uint16_t ReadData();
     void SetBounds(uint16_t Left, uint16_t Top, uint16_t Width, uint16_t Height);
@@ -29,3 +31,5 @@ public:
 //    void DrawImage(uint16_t Left, uint16_t Top);
     void DrawImage(uint16_t Left, uint16_t Top, uint16_t Width, uint16_t Height, uint8_t *image);
 };
+
+extern ILI9488_t Lcd;

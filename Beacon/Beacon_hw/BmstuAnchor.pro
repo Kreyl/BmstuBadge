@@ -1,4 +1,4 @@
-update=06.11.2017 11:56:13
+update=11.12.2017 17:08:07
 version=1
 last_client=kicad
 [pcbnew]
@@ -27,7 +27,7 @@ NetIExt=net
 version=1
 [eeschema]
 version=1
-LibDir=../Kreyl/LibsForKiCAD;../Kreyl/LibsForKiCAD/Kicad;KiCAD Libs
+LibDir=KiCAD Libs;../../Badge/Badge_hw
 [eeschema/libraries]
 LibName1=BmstuAnchor-rescue
 LibName2=power
@@ -91,3 +91,14 @@ LibName59=KiCAD Libs/ns_power
 LibName60=KiCAD Libs/sensors_ns
 LibName61=F:/BMSTUBadge/Badge_hw/Badge-cacheGOST
 LibName62=F:/BMSTUBadge/Badge_hw/Badge-cache
+LibName63=F:/BMSTUBadge/Badge/Badge_hw/Badge-cacheGOST
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceAjustPassiveValues=0
+LabSize=60
+ERC_TestSimilarLabels=1

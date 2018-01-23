@@ -7,9 +7,10 @@
 
 #pragma once
 
-#include <Gui/ILI9488.h>
+#include "ILI9488.h"
 #include "kl_lib.h"
 #include "kl_buf.h"
+#include "stmpe811.h"
 #include "ControlClasses.h"
 
 #define FRAMEBUFFER_LEN             20000   // 200x100
@@ -26,4 +27,3 @@ public:
 };
 
 extern Gui_t Gui;
-extern ILI9488_t Lcd;

@@ -36,8 +36,8 @@ extern STMPE811_t Touch;
 // Calibration
 #define CLBR_X_LEFT     3760
 #define CLBR_X_RIGHT    210
-#define CLBR_Y_TOP      240
-#define CLBR_Y_BOTTOM   3840
+#define CLBR_Y_TOP      3840
+#define CLBR_Y_BOTTOM   240
 // Common formulas
 #define CLBR_DIV
 #define CLBR_A(in0, in1, out0, out1)    (((out1) - (out0)) / ((in1) - (in0)))

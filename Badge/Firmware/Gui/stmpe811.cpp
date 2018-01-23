@@ -129,8 +129,8 @@ uint8_t STMPE811_t::ReadData() {
     uint8_t tmp;
     Read(STMPE811_TSC_CTRL, &tmp, 1);
 //    Printf("%X\r", tmp);
-//    Printf("tch: %d %d; %d %d\r", FX, FY, X, Y);
-    Printf("tch: %d %d %d %d %d\r", FX, FY, Data[0], Data[1], Data[2]);
+    Printf("tch: %d %d; %d %d\r", FX, FY, X, Y);
+//    Printf("tch: %d %d %d %d %d\r", FX, FY, Data[0], Data[1], Data[2]);
 //    Printf("tch: %d %d %X\r", FX, FY, Data[0] & 0x80);
     return retvNew;
 }
