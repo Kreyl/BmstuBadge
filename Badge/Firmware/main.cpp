@@ -17,6 +17,7 @@
 #include "axp.h"
 #include "ImageBMP.h"
 #include "gui_engine.h"
+#include "Radio/radio_lvl1.h"
 
 // Forever
 EvtMsgQ_t<EvtMsg_t, MAIN_EVT_Q_LEN> EvtQMain;
@@ -76,7 +77,7 @@ int main(void) {
     Image.Init();
 
     Gui.Init();
-
+    Radio.Init();
 
 
 //    Image.ShowImage(160, 100, "ostranna.bmp");

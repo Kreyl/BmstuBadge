@@ -95,11 +95,11 @@
 
 #endif // GPIO
 
-#if 1 // =========================== SPI =======================================
-#define CC_SPI          SPI1
-#define CC_SPI_AF       AF5
-
-#endif
+//#if 1 // =========================== SPI =======================================
+//#define CC_SPI          SPI1
+//#define CC_SPI_AF       AF5
+//
+//#endif
 
 #if 1 // ========================== USART ======================================
 #define PRINTF_FLOAT_EN FALSE
