@@ -11,7 +11,6 @@
 #include "shell.h"
 #include "board.h"
 
-cc1101_t CC(CC_Setup0);
 
 //#define DBG_PINS
 
@@ -43,10 +42,16 @@ __noreturn
 void rLevel1_t::ITask() {
     while(true) {
     	Pkt.BeaconID = 42;
-    	Pkt.TestWord = TEST_WORD;
-            // Send ID
-            CC.Recalibrate();
-            CC.Transmit(&Pkt);
+    	int8_t Rssi = 0;
+		// Send ID
+		CC.Recalibrate();
+		//Printf("transmit start\r");
+		CC.Transmit(&Pkt);
+		//CC.Receive(1500,&Pkt,&Rssi);
+		//Printf("received ID: %d with RSSI = %d\r", Pkt.BeaconID, Rssi);
+
+        EvtMsg_t Msg(evtRadioTransmitted, Pkt.BeaconID);
+        EvtQMain.SendNowOrExit(Msg);
         chThdSleepMilliseconds(2000);
     } // while
 }
@@ -66,6 +71,7 @@ uint8_t rLevel1_t::Init() {
         CC.Recalibrate();
         // Thread
         chThdCreateStatic(warLvl1Thread, sizeof(warLvl1Thread), HIGHPRIO, (tfunc_t)rLvl1Thread, NULL);
+        //ITask();
         return retvOk;
     }
     else return retvFail;

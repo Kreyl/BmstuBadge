@@ -12,8 +12,5 @@ enum EvtMsgId_t {
 
     // Pretending to eternity
     evtIdShellCmd,
-    evtIdEverySecond,
-
-    evtIdRadioCmd,
-    evtIdButtons,
+	evtRadioTransmitted
 };

@@ -30,6 +30,8 @@ public:
     void FillWindow(uint32_t Left, uint32_t Top, uint32_t Width, uint32_t Height, uint16_t *Ptr);
 //    void DrawImage(uint16_t Left, uint16_t Top);
     void DrawImage(uint16_t Left, uint16_t Top, uint16_t Width, uint16_t Height, uint8_t *image);
+    void SwitchTo16BitsPerPixel();
+    void SwitchTo24BitsPerPixel();
 };
 
 extern ILI9488_t Lcd;

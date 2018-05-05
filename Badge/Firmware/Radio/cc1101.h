@@ -11,27 +11,27 @@
 #include "kl_lib.h"
 #include "cc1101defins.h"
 #include "cc1101_rf_settings.h"
+#include "cc_gpio.h"
+#include "shell.h"
 
 #define CC_BUSYWAIT_TIMEOUT     99000   // tics, not ms
 
-class cc1101_t : public IrqHandler_t {
+class cc1101_t	:	public IrqHandler_t {
 private:
-    const Spi_t ISpi;
-    const GPIO_TypeDef *PGpio;
-    const uint16_t Sck, Miso, Mosi, Cs;
+    Spi_t ISpi;
     const PinIrq_t IGdo0;
+    thread_reference_t ThdRef;
     uint8_t IState; // Inner CC state, returned as first byte
     uint8_t IPktSz;
-    thread_reference_t ThdRef;
     // Pins
     uint8_t BusyWait() {
         for(uint32_t i=0; i<CC_BUSYWAIT_TIMEOUT; i++) {
-            if(PinIsLo(PGpio, Miso)) return retvOk;
+            if(PinIsLo(CC_GPIO, CC_MISO)) return retvOk;
         }
         return retvFail;
     }
-    void CsHi() { PinSetHi((GPIO_TypeDef*)PGpio, Cs); }
-    void CsLo() { PinSetLo((GPIO_TypeDef*)PGpio, Cs); }
+    void CsHi() { PinSetHi(CC_GPIO, CC_CS); }
+    void CsLo() { PinSetLo(CC_GPIO, CC_CS); }
     // General
     void RfConfig();
     int8_t RSSI_dBm(uint8_t ARawRSSI);
@@ -64,12 +64,16 @@ public:
     }
     uint8_t ReadFIFO(void *Ptr, int8_t *PRssi);
 
-    void IIrqHandler() { chThdResumeI(&ThdRef, MSG_OK); }   // NotNull check perfprmed inside chThdResumeI
-    cc1101_t(
-            SPI_TypeDef *ASpi, GPIO_TypeDef *APGpio,
-            uint16_t ASck, uint16_t AMiso, uint16_t AMosi, uint16_t ACs, uint16_t AGdo0):
-        ISpi(ASpi), PGpio(APGpio),
-        Sck(ASck), Miso(AMiso), Mosi(AMosi), Cs(ACs),
-        IGdo0(APGpio, AGdo0, pudNone, this),
-        IState(0), IPktSz(0), ThdRef(nullptr) {}
+    void IIrqHandler()	{
+//    	CH_IRQ_PROLOGUE();
+//    	chSysLockFromISR();
+//    	Printf("CC IRQ\r");
+//    	IGdo0.CleanIrqFlag();
+    	chThdResumeI(&ThdRef, MSG_OK);
+//    	chSysUnlockFromISR();
+//    	CH_IRQ_EPILOGUE();
+    	}
+    cc1101_t(): ISpi(CC_SPI), IGdo0(CC_GPIO, CC_GDO0, pudNone, this), ThdRef(nullptr), IState(0), IPktSz(0)	{}
 };
+
+extern cc1101_t CC;

@@ -23,11 +23,11 @@
 EvtMsgQ_t<EvtMsg_t, MAIN_EVT_Q_LEN> EvtQMain;
 extern CmdUart_t Uart;
 void OnCmd(Shell_t *PShell);
+void OnRadioReceived(uint32_t Rssi, uint8_t BeaconID);
+void OnBatVoltageChanged();
 void ITask();
 
 LedRGB_t Led { LED_RED_CH, LED_GREEN_CH, LED_BLUE_CH };
-
-axp_t axp;
 
 ImageBMP_t Image;
 
@@ -61,28 +61,24 @@ int main(void) {
 //    axp.setDCDC3milliVoltage(3300);
 //    axp.setLDO4To2500mV();
 //    axp.setLDO2milliVoltage(3200);
-//    axp.keyShortStartShortFinish();
+    axp.keyShortStartShortFinish();
 //    axp.readVBUSVoltage();
 //    axp.readVBUSCurrent();
 //    axp.readACINVoltage();
 //    axp.readACINCurrent();
-//    axp.readBatVoltage();
+    axp.readBatVoltage();
+    axp.readChargeStatus();
 //    axp.readIPSOUTVoltage();
 //    axp.readTemperature();
 
 
-//    ili.DrawImage(160,100);
     Touch.Init(&i2c3);
     SD.Init();
-    Image.Init();
+//    Image.Init();
 
     Gui.Init();
+
     Radio.Init();
-
-
-//    Image.ShowImage(160, 100, "ostranna.bmp");
-
-//    SimpleSensors::Init();
 
     // Main cycle
     ITask();
@@ -96,6 +92,14 @@ void ITask() {
             case evtIdShellCmd:
                 OnCmd((Shell_t*)Msg.Ptr);
                 ((Shell_t*)Msg.Ptr)->SignalCmdProcessed();
+                break;
+
+            case evtAxpBatVoltageChanged:
+            	OnBatVoltageChanged();
+            	break;
+
+            case evtRadioSomeIDReceived:
+            	OnRadioReceived(Msg.Value, Msg.ValueID);
                 break;
 
             case evtIdButtons:
@@ -117,5 +121,24 @@ void OnCmd(Shell_t *PShell) {
     else if(PCmd->NameIs("Version")) PShell->Printf("%S %S\r", APP_NAME, BUILD_TIME);
 
     else PShell->Ack(retvCmdUnknown);
+}
+
+void OnRadioReceived(uint32_t Rssi, uint8_t BeaconID){
+//	Printf("someone is here\r");
+	if(BeaconID == 0) return;
+    Printf("signal RSSI: %d, received ID: %d\r", Rssi, BeaconID );
+	Gui.DrawNumber(300, 340, Rssi, 0, "");
+	Gui.DrawNumber(300, 370, BeaconID, 0, "");
+}
+
+
+void OnBatVoltageChanged(){
+//	Printf("\r Battery voltage= %u*1.1mV\n",axp.batSavedVoltage);
+	uint16_t BatVoltage = axp.batSavedVoltage * 1.1 / 100;
+	const char* BatterySign = "";
+	if(BatVoltage > 35) BatterySign = "bat_full.bmp";
+	if(BatVoltage > 33) BatterySign = "bat_half.bmp";
+	if(BatVoltage <= 33) BatterySign = "bat_low.bmp";
+	Gui.DrawNumber(300, 400, BatVoltage, 1, BatterySign);
 }
 #endif

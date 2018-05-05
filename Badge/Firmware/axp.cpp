@@ -7,6 +7,16 @@
 
 #include "axp.h"
 #include "shell.h"
+#include "MsgQ.h"
+
+axp_t axp;
+
+static THD_WORKING_AREA(waAxpThread, 128);
+__noreturn
+static THD_FUNCTION(AxpThread, arg) {
+    chRegSetThreadName("AXP");
+    axp.ITask();
+}
 
 uint8_t axpAddress = 0x34;
 
@@ -97,6 +107,7 @@ void axp_t::init(i2c_t* pi2c){
 	this->i2c=pi2c;
 	uint8_t dataToWrite[]={reg_ADC_enableSet_1,0xFF};
 	i2c->Write(axpAddress,dataToWrite,2);
+    chThdCreateStatic(waAxpThread, sizeof(waAxpThread), NORMALPRIO, AxpThread, NULL);
 }
 
 uint8_t axp_t::readStatusRegister(){
@@ -159,13 +170,25 @@ void axp_t::keyShortStartShortFinish(){
 	i2c->Write(axpAddress,dataToWrite,2);
 }
 
+uint16_t axp_t::readChargeStatus(){
+	uint8_t returnDataH;
+	uint8_t returnDataL;
+	i2c->WriteRead(axpAddress,&reg_powerStatus,1,&returnDataH,1);
+	i2c->WriteRead(axpAddress,&reg_powerMode,1,&returnDataL,1);
+	uint16_t returnData=(returnDataH<<4)|returnDataL;
+    Printf("Power Status= %u \n\r",returnDataH);
+    Printf("Power Mode= %u \n\r",returnDataL);
+	return returnData;
+
+}
+
 uint16_t axp_t::readVBUSVoltage(){
 	uint8_t returnDataH;
 	uint8_t returnDataL;
 	i2c->WriteRead(axpAddress,&reg_VBUS_VoltageH,1,&returnDataH,1);
 	i2c->WriteRead(axpAddress,&reg_VBUS_VoltageL,1,&returnDataL,1);
 	uint16_t returnData=(returnDataH<<4)|returnDataL;
-    Printf("\r VBUS voltage= %u*1.7mV\n",returnData);
+    Printf("VBUS voltage= %u*1.7mV\n\r ",returnData);
 	return returnData;
 
 }
@@ -175,7 +198,7 @@ uint16_t axp_t::readVBUSCurrent(){
 	i2c->WriteRead(axpAddress,&reg_VBUS_CurrentH,1,&returnDataH,1);
 	i2c->WriteRead(axpAddress,&reg_VBUS_CurrentL,1,&returnDataL,1);
 	uint16_t returnData=(returnDataH<<4)|returnDataL;
-    Printf("\r VBUS current= %u*0.375mA\n",returnData);
+    Printf("VBUS current= %u*0.375mA\n\r ",returnData);
 	return returnData;
 
 }
@@ -185,7 +208,7 @@ uint16_t axp_t::readACINVoltage(){
 	i2c->WriteRead(axpAddress,&reg_ACIN_VoltageH,1,&returnDataH,1);
 	i2c->WriteRead(axpAddress,&reg_ACIN_VoltageL,1,&returnDataL,1);
 	uint16_t returnData=(returnDataH<<4)|returnDataL;
-    Printf("\r ACIN voltage= %u*1.7mV\n",returnData);
+    Printf("ACIN voltage= %u*1.7mV\n\r",returnData);
 	return returnData;
 
 }
@@ -195,7 +218,7 @@ uint16_t axp_t::readACINCurrent(){
 	i2c->WriteRead(axpAddress,&reg_ACIN_CurrentH,1,&returnDataH,1);
 	i2c->WriteRead(axpAddress,&reg_ACIN_CurrentL,1,&returnDataL,1);
 	uint16_t returnData=(returnDataH<<4)|returnDataL;
-    Printf("\r ACIN current= %u*0.625mV\n",returnData);
+    Printf("ACIN current= %u*0.625mV\n\r",returnData);
 	return returnData;
 
 }
@@ -205,17 +228,17 @@ uint16_t axp_t::readTemperature(){
 	i2c->WriteRead(axpAddress,&reg_intTempH,1,&returnDataH,1);
 	i2c->WriteRead(axpAddress,&reg_intTempL,1,&returnDataL,1);
 	uint16_t returnData=(returnDataH<<4)|returnDataL;
-    Printf("\r internal temp= %u*0.1-144.7\n",returnData);
+    Printf("internal temp= %u*0.1-144.7\n\r",returnData);
 	return returnData;
 
 }
-uint16_t axp_t::readBatVoltage(){
+uint16_t axp_t::readBatVoltage(bool sendInfoViaUart){
 	uint8_t returnDataH;
 	uint8_t returnDataL;
 	i2c->WriteRead(axpAddress,&reg_BatVoltageH,1,&returnDataH,1);
 	i2c->WriteRead(axpAddress,&reg_BatVoltageL,1,&returnDataL,1);
 	uint16_t returnData=(returnDataH<<4)|returnDataL;
-    Printf("\r Battery voltage= %u*1.1mV\n",returnData);
+	if(sendInfoViaUart) Printf("Battery voltage= %u*1.1mV\n\r",returnData);
 	return returnData;
 
 }
@@ -225,13 +248,25 @@ uint16_t axp_t::readIPSOUTVoltage(){
 	i2c->WriteRead(axpAddress,&reg_IPSOutVoltageH,1,&returnDataH,1);
 	i2c->WriteRead(axpAddress,&reg_IPSOutVoltageL,1,&returnDataL,1);
 	uint16_t returnData=(returnDataH<<4)|returnDataL;
-    Printf("\r Unstable voltage= %u*1.4mV\n",returnData);
+    Printf("Unstable voltage= %u*1.4mV\n\r",returnData);
 	return returnData;
 
 }
 
 
+__noreturn
+void axp_t::ITask(){
+	while(true){
+		uint16_t batCurrentVoltage = axp.readBatVoltage();
+		if( ((batCurrentVoltage - batSavedVoltage) > 100) || ((batSavedVoltage - batCurrentVoltage) > 100)){
+			batSavedVoltage = batCurrentVoltage;
 
+	        EvtMsg_t Msg(evtAxpBatVoltageChanged);
+	        EvtQMain.SendNowOrExit(Msg);
+		};
+	    chThdSleepMilliseconds(1000);
+	}
+}
 
 
 

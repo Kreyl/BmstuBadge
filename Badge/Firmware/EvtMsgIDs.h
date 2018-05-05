@@ -13,6 +13,8 @@ enum EvtMsgId_t {
     // Pretending to eternity
     evtIdShellCmd = 1,
     evtIdEverySecond = 2,
+	evtAxpBatVoltageChanged = 3,
+	evtRadioSomeIDReceived = 4,
 
     evtIdButtons = 15,
 

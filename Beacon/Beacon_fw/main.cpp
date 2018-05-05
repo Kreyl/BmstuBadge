@@ -40,7 +40,7 @@ int main(void) {
     Clk.PrintFreqs();
 
     Led.Init();
-    Led.StartOrRestart(lsqStart);
+    //Led.StartOrRestart(lsqStart);
 
     Radio.Init();
 
@@ -57,6 +57,9 @@ void ITask() {
                 OnCmd((Shell_t*)Msg.Ptr);
                 ((Shell_t*)Msg.Ptr)->SignalCmdProcessed();
                 break;
+            case evtRadioTransmitted:
+            	Led.StartOrRestart(lsqHit);
+            	break;
 
             default: break;
         }
@@ -67,8 +70,8 @@ void ITask() {
 #if 1 // ======================= Command processing ============================
 void OnCmd(Shell_t *PShell) {
 	Cmd_t *PCmd = &PShell->Cmd;
-//    __unused int32_t dw32 = 0;  // May be unused in some configurations
-//    Uart.Printf("\r%S\r", PCmd->Name);
+    __unused int32_t dw32 = 0;  // May be unused in some configurations
+    Printf("\r%S\r", PCmd->Name);
     // Handle command
     if(PCmd->NameIs("Ping")) PShell->Ack(retvOk);
     else if(PCmd->NameIs("Version")) PShell->Printf("%S %S\r", APP_NAME, BUILD_TIME);

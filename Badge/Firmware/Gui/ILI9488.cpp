@@ -8,6 +8,8 @@
 #include <Gui/ILI9488.h>
 #include "board.h"
 #include "uart.h"
+
+ILI9488_t Lcd;
 //#include "images.h"
 
 #if 1 // ==== Pin driving functions ====
@@ -63,7 +65,7 @@ void ILI9488_t::Init() {
     WriteCmd(0x29); // Display ON
     // Row order etc.
     WriteCmd(0x36);
-    WriteData(0xb8);    // MY, Row/Column exchange, BGR
+    WriteData(0xAA);    //b8 MY, Row/Column exchange, BGR
     // Pixel format
     WriteCmd(0x3A);
     WriteData(0x55);    // 16 bit both RGB & MCU
@@ -83,6 +85,17 @@ void ILI9488_t::Init() {
 //        Printf("Lcd: %X\r", r);
 //    }
     PortSetupOutput(LCD_DATA_GPIO);
+}
+
+void ILI9488_t::SwitchTo16BitsPerPixel(){
+	WriteCmd(0x3A);
+	WriteData(0x55);    // 16 bit both RGB & MCU
+    chThdSleepMilliseconds(4);
+}
+void ILI9488_t::SwitchTo24BitsPerPixel(){
+	WriteCmd(0x3A);
+	WriteData(0x77);    // 24 bit both RGB & MCU
+    chThdSleepMilliseconds(4);
 }
 
 void ILI9488_t::WriteCmd(uint8_t Cmd) {

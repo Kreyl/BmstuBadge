@@ -1,0 +1,1002 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>F:/BMSTUBadge/Beacon/Beacon_hw/BmstuAnchor.sch</source>
+    <date>16.04.2018 16:42:56</date>
+    <tool>Eeschema (2017-02-02 revision 8dadc18)-makepkg</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date>2017-12-11</date>
+        <source>BmstuAnchor.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value="Шанин Н.А."/>
+        <comment number="3" value="Круглов Г.В."/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="DD2">
+      <value>CC1101</value>
+      <footprint>QFN_DFN:QFN20</footprint>
+      <fields>
+        <field name="URL">http://</field>
+        <field name="Price">140</field>
+        <field name="SolderPoints">21</field>
+      </fields>
+      <libsource lib="RF ICs" part="CC1101"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A24</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>56k</value>
+      <footprint>Resistors:RES_0603</footprint>
+      <libsource lib="Badge-cache" part="R-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A33</tstamp>
+    </comp>
+    <comp ref="C8">
+      <value>18p</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A3D</tstamp>
+    </comp>
+    <comp ref="R7">
+      <value>56k</value>
+      <footprint>Resistors:RES_0603</footprint>
+      <libsource lib="Badge-cache" part="R-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A44</tstamp>
+    </comp>
+    <comp ref="BLN1">
+      <value>BALUN868JOHANSON</value>
+      <footprint>Radio:BALUN_JOHANSON868</footprint>
+      <fields>
+        <field name="PN">0896BM15A0001E</field>
+        <field name="URL">http://onelec.ru/products/0896bm15a0001e-52ab3408-7c12-4b8c-99ab-cc294cdc1e18</field>
+        <field name="SolderPoints">6</field>
+      </fields>
+      <libsource lib="RF ICs" part="BALUN868JOHANSON"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A4E</tstamp>
+    </comp>
+    <comp ref="C17">
+      <value>3.9p*</value>
+      <footprint>Capacitors:CAP_0402</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A57</tstamp>
+    </comp>
+    <comp ref="C19">
+      <value>DoNotMount</value>
+      <footprint>Capacitors:CAP_0402</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A5F</tstamp>
+    </comp>
+    <comp ref="C9">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A69</tstamp>
+    </comp>
+    <comp ref="XTAL2">
+      <value>27MHz</value>
+      <footprint>Quartz:03225C4</footprint>
+      <fields>
+        <field name="Price">15</field>
+        <field name="SolderPoints">4</field>
+      </fields>
+      <libsource lib="Tittar_kl" part="CRYSTAL_H"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A7B</tstamp>
+    </comp>
+    <comp ref="C10">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A82</tstamp>
+    </comp>
+    <comp ref="C12">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A89</tstamp>
+    </comp>
+    <comp ref="C13">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A90</tstamp>
+    </comp>
+    <comp ref="C14">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A97</tstamp>
+    </comp>
+    <comp ref="C15">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A9E</tstamp>
+    </comp>
+    <comp ref="C16">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933AA5</tstamp>
+    </comp>
+    <comp ref="D5">
+      <value>ANT</value>
+      <footprint>ANT_868_INV_F:ANTENNA_868_INV_F_SHARP</footprint>
+      <libsource lib="Badge-cache" part="ANT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933AD6</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>18p</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933ADC</tstamp>
+    </comp>
+    <comp ref="TP1">
+      <value>TESTPOINT</value>
+      <footprint>PCB:TESTPOINT_1MM</footprint>
+      <fields>
+        <field name="Price">0</field>
+        <field name="SolderPoints">0</field>
+      </fields>
+      <libsource lib="pcb_details" part="TESTPOINT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933AE6</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>MCP1700T-3302E/TT</value>
+      <footprint>SOT:SOT23-3</footprint>
+      <libsource lib="regul" part="MCP1700T-3002E/TT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59A00010</tstamp>
+    </comp>
+    <comp ref="LIPO_BAT1">
+      <value>DW02R</value>
+      <footprint>Connectors:PLS-2-wide</footprint>
+      <libsource lib="Badge-power_supply" part="DW02R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59A06326</tstamp>
+    </comp>
+    <comp ref="B1">
+      <value>BAT</value>
+      <footprint>Installation:BATTERY_CH7410</footprint>
+      <libsource lib="Power_kl" part="BAT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59A0A2AF</tstamp>
+    </comp>
+    <comp ref="XL1">
+      <value>CONN_6</value>
+      <footprint>Connectors:PLS-6</footprint>
+      <fields>
+        <field name="SolderPoints">0</field>
+        <field name="SolderPointsDIP">6</field>
+      </fields>
+      <libsource lib="Connectors_kl" part="CONN_6"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59A16E0F</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>LED_RGB</value>
+      <footprint>LEDs:LED_5050</footprint>
+      <libsource lib="Badge-cache" part="LED_RGB-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59A2CDFE</tstamp>
+    </comp>
+    <comp ref="DD1">
+      <value>STM32F030C8Tx</value>
+      <footprint>LQFP_TQFP:LQFP48</footprint>
+      <libsource lib="st_kl" part="STM32F030C8Tx"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59A7451E</tstamp>
+    </comp>
+    <comp ref="TP2">
+      <value>TESTPOINT</value>
+      <footprint>PCB:TESTPOINT_1MM</footprint>
+      <fields>
+        <field name="Price">0</field>
+        <field name="SolderPoints">0</field>
+      </fields>
+      <libsource lib="pcb_details" part="TESTPOINT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59A7FF23</tstamp>
+    </comp>
+    <comp ref="C22">
+      <value>100pF</value>
+      <footprint>Capacitors:CAP_0402</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A006874</tstamp>
+    </comp>
+    <comp ref="L2">
+      <value>12nH*</value>
+      <footprint>Inductors:IND_0402</footprint>
+      <fields>
+        <field name="Price">4</field>
+        <field name="SolderPoints">2</field>
+      </fields>
+      <libsource lib="Badge-cache" part="L-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59933A72</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A307D48</tstamp>
+    </comp>
+    <comp ref="C6">
+      <value>1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A308B8A</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A308E39</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A3090CC</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>0.1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A30917C</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>10u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A30922D</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>0R</value>
+      <footprint>Resistors:RES_0603</footprint>
+      <libsource lib="Badge-cache" part="R-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A30D47B</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>1k</value>
+      <footprint>Resistors:RES_0603</footprint>
+      <libsource lib="Badge-cache" part="R-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A30E862</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>1k</value>
+      <footprint>Resistors:RES_0603</footprint>
+      <libsource lib="Badge-cache" part="R-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A30EB17</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>1k</value>
+      <footprint>Resistors:RES_0603</footprint>
+      <libsource lib="Badge-cache" part="R-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A30EBC5</tstamp>
+    </comp>
+    <comp ref="C21">
+      <value>1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A310D41</tstamp>
+    </comp>
+    <comp ref="C20">
+      <value>1u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A31123D</tstamp>
+    </comp>
+    <comp ref="C11">
+      <value>0.1u 400V</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A3112E9</tstamp>
+    </comp>
+    <comp ref="C18">
+      <value>100u</value>
+      <footprint>Capacitors:CAP_0603</footprint>
+      <libsource lib="Badge-cache" part="C-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A3113E7</tstamp>
+    </comp>
+    <comp ref="L1">
+      <value>BLM15AG102</value>
+      <footprint>Inductors:IND_0402</footprint>
+      <fields>
+        <field name="Price">4</field>
+        <field name="SolderPoints">2</field>
+      </fields>
+      <libsource lib="Badge-cache" part="L-RESCUE-Badge"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A31676C</tstamp>
+    </comp>
+    <comp ref="D3">
+      <value>SM4004</value>
+      <libsource lib="device" part="D"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A31951B</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>SM4004</value>
+      <libsource lib="device" part="D"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A319795</tstamp>
+    </comp>
+    <comp ref="VD1">
+      <value>BZX64C5V1LT1G</value>
+      <libsource lib="BmstuAnchor-cache" part="VD"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A319ABA</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Badge-cache" part="ANT">
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">ANT</field>
+      </fields>
+      <pins>
+        <pin num="GND" name="~" type="power_in"/>
+        <pin num="~" name="~" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="RF ICs" part="BALUN868JOHANSON">
+      <description>Balun for CC1101</description>
+      <fields>
+        <field name="Reference">BLN</field>
+        <field name="Value">BALUN868JOHANSON</field>
+        <field name="Footprint">Radio:BALUN_JOHANSON868</field>
+        <field name="PN">0896BM15A0001E</field>
+        <field name="URL">http://onelec.ru/products/0896bm15a0001e-52ab3408-7c12-4b8c-99ab-cc294cdc1e18</field>
+        <field name="SolderPoints">6</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Unbal" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+        <pin num="3" name="Bal1" type="passive"/>
+        <pin num="4" name="Bal2" type="passive"/>
+        <pin num="5" name="GND" type="passive"/>
+        <pin num="6" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Power_kl" part="BAT">
+      <description>Battery</description>
+      <fields>
+        <field name="Reference">B</field>
+        <field name="Value">BAT</field>
+      </fields>
+      <pins>
+        <pin num="A" name="A" type="power_out"/>
+        <pin num="C" name="C" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="Badge-cache" part="C-RESCUE-Badge">
+      <footprints>
+        <fp>C?</fp>
+        <fp>C_????_*</fp>
+        <fp>C_????</fp>
+        <fp>SMD*_c</fp>
+        <fp>Capacitor*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C-RESCUE-Badge</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="input"/>
+        <pin num="2" name="~" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="RF ICs" part="CC1101">
+      <description>Tranceiver 300-915MHz</description>
+      <footprints>
+        <fp>QFN20</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">DD</field>
+        <field name="Value">CC1101</field>
+        <field name="Footprint">QFN_DFN:QFN20</field>
+        <field name="URL">http://</field>
+        <field name="Price">140</field>
+        <field name="SolderPoints">21</field>
+      </fields>
+      <pins>
+        <pin num="1" name="SCLK" type="passive"/>
+        <pin num="2" name="SO(GDO1)" type="passive"/>
+        <pin num="3" name="GDO2" type="passive"/>
+        <pin num="4" name="DVDD" type="power_in"/>
+        <pin num="5" name="DCOUPL" type="passive"/>
+        <pin num="6" name="GDO0" type="passive"/>
+        <pin num="7" name="CSn" type="passive"/>
+        <pin num="8" name="XOSC_Q1" type="passive"/>
+        <pin num="9" name="AVDD" type="power_in"/>
+        <pin num="10" name="XOSC_Q2" type="passive"/>
+        <pin num="11" name="AVDD" type="power_in"/>
+        <pin num="12" name="RF_P" type="output"/>
+        <pin num="13" name="RF_N" type="output"/>
+        <pin num="14" name="AVDD" type="power_in"/>
+        <pin num="15" name="AVDD" type="power_in"/>
+        <pin num="16" name="GND" type="power_in"/>
+        <pin num="17" name="RBIAS" type="passive"/>
+        <pin num="18" name="DGUARD" type="passive"/>
+        <pin num="19" name="GND" type="power_in"/>
+        <pin num="20" name="SI" type="passive"/>
+        <pin num="PAD" name="GND" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connectors_kl" part="CONN_6">
+      <description>6-pin connector</description>
+      <fields>
+        <field name="Reference">XL</field>
+        <field name="Value">CONN_6</field>
+        <field name="SolderPoints">0</field>
+        <field name="SolderPointsDIP">6</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+        <pin num="3" name="~" type="passive"/>
+        <pin num="4" name="~" type="passive"/>
+        <pin num="5" name="~" type="passive"/>
+        <pin num="6" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Tittar_kl" part="CRYSTAL_H">
+      <description>Crystal with housing to solder</description>
+      <footprints>
+        <fp>CRYSTAL*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">XTAL</field>
+        <field name="Value">CRYSTAL_H</field>
+        <field name="Footprint">CRYSTAL</field>
+        <field name="Price">15</field>
+        <field name="SolderPoints">4</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="H" name="H" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="D">
+      <description>Diode</description>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*SingleDiode</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Badge-power_supply" part="DW02R">
+      <fields>
+        <field name="Reference">LIPO_BAT</field>
+        <field name="Value">DW02R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="power_out"/>
+        <pin num="2" name="-" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="Badge-cache" part="L-RESCUE-Badge">
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">L-RESCUE-Badge</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Badge-cache" part="LED_RGB-RESCUE-Badge">
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED_RGB-RESCUE-Badge</field>
+      </fields>
+      <pins>
+        <pin num="1" name="RC" type="passive"/>
+        <pin num="2" name="GC" type="passive"/>
+        <pin num="3" name="BC" type="passive"/>
+        <pin num="4" name="BA" type="passive"/>
+        <pin num="5" name="GA" type="passive"/>
+        <pin num="6" name="RA" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="regul" part="MCP1700T-3002E/TT">
+      <description>250mA Low Quiscent Current LDO, 3.0V output, SOT-23-3 package</description>
+      <docs>http://ww1.microchip.com/downloads/en/DeviceDoc/20001826C.pdf</docs>
+      <footprints>
+        <fp>SOT-23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MCP1700T-3002E/TT</field>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="power_in"/>
+        <pin num="2" name="VO" type="power_out"/>
+        <pin num="3" name="VI" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Badge-cache" part="R-RESCUE-Badge">
+      <footprints>
+        <fp>R_*</fp>
+        <fp>Resistor_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R-RESCUE-Badge</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="st_kl" part="STM32F030C8Tx">
+      <description>Cortex-M0, LQFP48</description>
+      <footprints>
+        <fp>LQFP48*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">DD</field>
+        <field name="Value">STM32F030C8Tx</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VDD" type="power_in"/>
+        <pin num="2" name="WKUP2/RTC_OUT/PC13" type="passive"/>
+        <pin num="3" name="OC32IN/PC14" type="passive"/>
+        <pin num="4" name="OC32OUT/PC15" type="passive"/>
+        <pin num="5" name="OSCIN/PF0" type="passive"/>
+        <pin num="6" name="OSCOUT/PF1" type="passive"/>
+        <pin num="7" name="NRST" type="passive"/>
+        <pin num="8" name="VSSA" type="power_in"/>
+        <pin num="9" name="VDDA" type="power_in"/>
+        <pin num="10" name="ADC0/WKUP1/PA0" type="passive"/>
+        <pin num="11" name="ADC1/PA1" type="passive"/>
+        <pin num="12" name="ADC2/T15C1/TX2/PA2" type="passive"/>
+        <pin num="13" name="ADC3/T15C2/RX2/PA3" type="passive"/>
+        <pin num="14" name="ADC4/T14C1/CK2/PA4" type="passive"/>
+        <pin num="15" name="ADC5/SCK1/PA5" type="passive"/>
+        <pin num="16" name="ADC6/T16C1/T3C1/MISO1/PA6" type="passive"/>
+        <pin num="17" name="ADC7/T14C1/T17C1/T1C1N/T3C2/MOSI1/PA7" type="passive"/>
+        <pin num="18" name="PB0/T3C3/T1C2N/ADC8" type="passive"/>
+        <pin num="19" name="PB1/T3C4/T14C1/T1C3N/ADC9" type="passive"/>
+        <pin num="20" name="PB2" type="passive"/>
+        <pin num="21" name="PB10/SCL2" type="passive"/>
+        <pin num="22" name="PB11/SDA2" type="passive"/>
+        <pin num="23" name="VSS" type="power_in"/>
+        <pin num="24" name="VDD" type="power_in"/>
+        <pin num="25" name="PB12" type="passive"/>
+        <pin num="26" name="PB13/SCK2/SDA2/T1C1N" type="passive"/>
+        <pin num="27" name="PB14/MISO2/T1C2N/T15C1" type="passive"/>
+        <pin num="28" name="PB15/MOSI2/T1C3N/T15C1N/T15C2" type="passive"/>
+        <pin num="29" name="MCO/CK1/T1C1/PA8" type="passive"/>
+        <pin num="30" name="T1C2/TX1/PA9" type="passive"/>
+        <pin num="31" name="T1C3/RX1/PA10" type="passive"/>
+        <pin num="32" name="T1C4/PA11" type="passive"/>
+        <pin num="33" name="T1ETR/PA12" type="passive"/>
+        <pin num="34" name="IROUT/SWDIO/PA13" type="passive"/>
+        <pin num="35" name="SCL2/PF6" type="passive"/>
+        <pin num="36" name="SDA2/PF7" type="passive"/>
+        <pin num="37" name="TX2/SWCLK/PA14" type="passive"/>
+        <pin num="38" name="RX2/PA15" type="passive"/>
+        <pin num="39" name="PB3/SCK1" type="passive"/>
+        <pin num="40" name="PB4/T3C1/MISO1" type="passive"/>
+        <pin num="41" name="PB5/T3C2/MOSI1" type="passive"/>
+        <pin num="42" name="PB6/SCL1/T16C1N/TX1" type="passive"/>
+        <pin num="43" name="PB7/SDA1/T17C1N/RX1" type="passive"/>
+        <pin num="44" name="BOOT0" type="passive"/>
+        <pin num="45" name="PB8/SCL1/T16C1" type="passive"/>
+        <pin num="46" name="PB9/SDA1/T17C1/IROUT" type="passive"/>
+        <pin num="47" name="VSS" type="power_in"/>
+        <pin num="48" name="VDD" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="pcb_details" part="TESTPOINT">
+      <footprints>
+        <fp>TESTPOINT*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">TP</field>
+        <field name="Value">TESTPOINT</field>
+        <field name="Footprint">PCB:TESTPOINT_1MM</field>
+        <field name="Price">0</field>
+        <field name="SolderPoints">0</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BmstuAnchor-cache" part="VD">
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*SingleDiode</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">VD</field>
+        <field name="Value">VD</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="device">
+      <uri>C:\Program Files\KiCad\share\kicad\library\device.lib</uri>
+    </library>
+    <library logical="regul">
+      <uri>C:\Program Files\KiCad\share\kicad\library\regul.lib</uri>
+    </library>
+    <library logical="Connectors_kl">
+      <uri>F:\Kreyl\Libs\Kicad\Connectors_kl.lib</uri>
+    </library>
+    <library logical="st_kl">
+      <uri>F:\Kreyl\Libs\Kicad\st_kl.lib</uri>
+    </library>
+    <library logical="Badge-cache">
+      <uri>F:\BMSTUBadge\Badge\Badge_hw\Badge-cache.lib</uri>
+    </library>
+    <library logical="BmstuAnchor-cache">
+      <uri>F:\BMSTUBadge\Beacon\Beacon_hw\BmstuAnchor-cache.lib</uri>
+    </library>
+    <library logical="Badge-power_supply">
+      <uri>F:\BMSTUBadge\Beacon\Beacon_hw\KiCAD Libs\Badge-power_supply.lib</uri>
+    </library>
+    <library logical="Power_kl">
+      <uri>F:\Kreyl\Libs\Kicad\Power_kl.lib</uri>
+    </library>
+    <library logical="Tittar_kl">
+      <uri>F:\Kreyl\Libs\Kicad\Tittar_kl.lib</uri>
+    </library>
+    <library logical="RF ICs">
+      <uri>F:\Kreyl\Libs\Kicad\RF ICs.lib</uri>
+    </library>
+    <library logical="pcb_details">
+      <uri>F:\Kreyl\Libs\Kicad\pcb_details.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(D1-Pad5)">
+      <node ref="R2" pin="1"/>
+      <node ref="D1" pin="5"/>
+    </net>
+    <net code="2" name="Net-(D1-Pad6)">
+      <node ref="D1" pin="6"/>
+      <node ref="R1" pin="1"/>
+    </net>
+    <net code="3" name="Net-(D1-Pad4)">
+      <node ref="R3" pin="1"/>
+      <node ref="D1" pin="4"/>
+    </net>
+    <net code="4" name="/UART_RX">
+      <node ref="DD1" pin="31"/>
+      <node ref="XL1" pin="6"/>
+    </net>
+    <net code="5" name="/SWD_IO">
+      <node ref="DD1" pin="34"/>
+      <node ref="XL1" pin="4"/>
+    </net>
+    <net code="6" name="/SWD_CLK">
+      <node ref="XL1" pin="2"/>
+      <node ref="DD1" pin="37"/>
+    </net>
+    <net code="7" name="MCU_PWR">
+      <node ref="C1" pin="1"/>
+      <node ref="XL1" pin="1"/>
+      <node ref="C3" pin="1"/>
+      <node ref="DD1" pin="24"/>
+      <node ref="DD1" pin="9"/>
+      <node ref="DD1" pin="1"/>
+      <node ref="DD1" pin="48"/>
+      <node ref="C2" pin="1"/>
+      <node ref="C4" pin="1"/>
+      <node ref="C6" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="L1" pin="1"/>
+    </net>
+    <net code="8" name="GNDS">
+      <node ref="C7" pin="2"/>
+      <node ref="D5" pin="GND"/>
+      <node ref="C16" pin="2"/>
+      <node ref="C15" pin="2"/>
+      <node ref="BLN1" pin="5"/>
+      <node ref="BLN1" pin="2"/>
+      <node ref="R7" pin="2"/>
+      <node ref="DD1" pin="44"/>
+      <node ref="DD1" pin="23"/>
+      <node ref="DD1" pin="8"/>
+      <node ref="D1" pin="1"/>
+      <node ref="DD1" pin="47"/>
+      <node ref="D1" pin="2"/>
+      <node ref="BLN1" pin="6"/>
+      <node ref="D1" pin="3"/>
+      <node ref="XL1" pin="3"/>
+      <node ref="B1" pin="C"/>
+      <node ref="DD2" pin="PAD"/>
+      <node ref="DD2" pin="19"/>
+      <node ref="DD2" pin="16"/>
+      <node ref="C8" pin="2"/>
+      <node ref="C19" pin="2"/>
+      <node ref="C14" pin="2"/>
+      <node ref="C13" pin="2"/>
+      <node ref="C12" pin="2"/>
+      <node ref="C10" pin="2"/>
+      <node ref="XTAL2" pin="H"/>
+      <node ref="C9" pin="2"/>
+      <node ref="C17" pin="2"/>
+      <node ref="C1" pin="2"/>
+      <node ref="C5" pin="2"/>
+      <node ref="C6" pin="2"/>
+      <node ref="C4" pin="2"/>
+      <node ref="C3" pin="2"/>
+      <node ref="C2" pin="2"/>
+      <node ref="R4" pin="1"/>
+    </net>
+    <net code="9" name="/LED_B">
+      <node ref="R3" pin="2"/>
+      <node ref="DD1" pin="41"/>
+    </net>
+    <net code="10" name="/LED_G">
+      <node ref="R2" pin="2"/>
+      <node ref="DD1" pin="19"/>
+    </net>
+    <net code="11" name="/LED_R">
+      <node ref="R1" pin="2"/>
+      <node ref="DD1" pin="18"/>
+    </net>
+    <net code="12" name="/UART_TX">
+      <node ref="XL1" pin="5"/>
+      <node ref="DD1" pin="30"/>
+    </net>
+    <net code="13" name="Net-(C11-Pad1)">
+      <node ref="D3" pin="2"/>
+      <node ref="C11" pin="1"/>
+      <node ref="D2" pin="1"/>
+    </net>
+    <net code="14" name="/CC_SCK">
+      <node ref="DD1" pin="15"/>
+      <node ref="DD2" pin="1"/>
+    </net>
+    <net code="15" name="+3V">
+      <node ref="U1" pin="2"/>
+      <node ref="DD2" pin="9"/>
+      <node ref="DD2" pin="15"/>
+      <node ref="C16" pin="1"/>
+      <node ref="DD2" pin="18"/>
+      <node ref="DD2" pin="11"/>
+      <node ref="C15" pin="1"/>
+      <node ref="DD2" pin="4"/>
+      <node ref="R6" pin="2"/>
+      <node ref="DD2" pin="14"/>
+      <node ref="C14" pin="1"/>
+      <node ref="C13" pin="1"/>
+      <node ref="C12" pin="1"/>
+      <node ref="C10" pin="1"/>
+      <node ref="B1" pin="A"/>
+      <node ref="L1" pin="2"/>
+      <node ref="C21" pin="1"/>
+    </net>
+    <net code="16" name="GND">
+      <node ref="D2" pin="2"/>
+      <node ref="VD1" pin="2"/>
+      <node ref="C18" pin="2"/>
+      <node ref="U1" pin="1"/>
+      <node ref="LIPO_BAT1" pin="2"/>
+      <node ref="R4" pin="2"/>
+      <node ref="C20" pin="2"/>
+      <node ref="C21" pin="2"/>
+    </net>
+    <net code="17" name="Net-(C22-Pad1)">
+      <node ref="D5" pin="~"/>
+      <node ref="C22" pin="1"/>
+    </net>
+    <net code="18" name="Net-(DD1-Pad40)">
+      <node ref="DD1" pin="40"/>
+    </net>
+    <net code="19" name="Net-(DD1-Pad39)">
+      <node ref="DD1" pin="39"/>
+    </net>
+    <net code="20" name="Net-(DD1-Pad20)">
+      <node ref="DD1" pin="20"/>
+    </net>
+    <net code="21" name="Net-(DD1-Pad10)">
+      <node ref="DD1" pin="10"/>
+    </net>
+    <net code="22" name="Net-(DD1-Pad32)">
+      <node ref="DD1" pin="32"/>
+    </net>
+    <net code="23" name="Net-(DD1-Pad33)">
+      <node ref="DD1" pin="33"/>
+    </net>
+    <net code="24" name="Net-(DD1-Pad38)">
+      <node ref="DD1" pin="38"/>
+    </net>
+    <net code="25" name="Net-(DD1-Pad5)">
+      <node ref="DD1" pin="5"/>
+    </net>
+    <net code="26" name="Net-(DD1-Pad6)">
+      <node ref="DD1" pin="6"/>
+    </net>
+    <net code="27" name="Net-(DD1-Pad35)">
+      <node ref="DD1" pin="35"/>
+    </net>
+    <net code="28" name="Net-(DD1-Pad36)">
+      <node ref="DD1" pin="36"/>
+    </net>
+    <net code="29" name="Net-(DD1-Pad2)">
+      <node ref="DD1" pin="2"/>
+    </net>
+    <net code="30" name="Net-(DD1-Pad3)">
+      <node ref="DD1" pin="3"/>
+    </net>
+    <net code="31" name="Net-(DD1-Pad4)">
+      <node ref="DD1" pin="4"/>
+    </net>
+    <net code="32" name="Net-(DD1-Pad28)">
+      <node ref="DD1" pin="28"/>
+    </net>
+    <net code="33" name="Net-(DD1-Pad7)">
+      <node ref="DD1" pin="7"/>
+      <node ref="TP2" pin="1"/>
+    </net>
+    <net code="34" name="Net-(DD1-Pad29)">
+      <node ref="DD1" pin="29"/>
+    </net>
+    <net code="35" name="Net-(DD1-Pad13)">
+      <node ref="DD1" pin="13"/>
+    </net>
+    <net code="36" name="Net-(DD1-Pad12)">
+      <node ref="DD1" pin="12"/>
+    </net>
+    <net code="37" name="Net-(C7-Pad1)">
+      <node ref="C7" pin="1"/>
+      <node ref="XTAL2" pin="1"/>
+      <node ref="DD2" pin="8"/>
+    </net>
+    <net code="38" name="Net-(C18-Pad1)">
+      <node ref="D3" pin="1"/>
+      <node ref="C18" pin="1"/>
+      <node ref="VD1" pin="1"/>
+      <node ref="C20" pin="1"/>
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="39" name="Net-(DD1-Pad42)">
+      <node ref="DD1" pin="42"/>
+    </net>
+    <net code="40" name="Net-(DD1-Pad43)">
+      <node ref="DD1" pin="43"/>
+    </net>
+    <net code="41" name="Net-(DD1-Pad45)">
+      <node ref="DD1" pin="45"/>
+    </net>
+    <net code="42" name="Net-(DD1-Pad46)">
+      <node ref="DD1" pin="46"/>
+    </net>
+    <net code="43" name="Net-(DD1-Pad21)">
+      <node ref="DD1" pin="21"/>
+    </net>
+    <net code="44" name="Net-(DD1-Pad22)">
+      <node ref="DD1" pin="22"/>
+    </net>
+    <net code="45" name="Net-(DD1-Pad25)">
+      <node ref="DD1" pin="25"/>
+    </net>
+    <net code="46" name="Net-(DD1-Pad26)">
+      <node ref="DD1" pin="26"/>
+    </net>
+    <net code="47" name="Net-(DD1-Pad27)">
+      <node ref="DD1" pin="27"/>
+    </net>
+    <net code="48" name="/CC_GDO0">
+      <node ref="DD2" pin="6"/>
+      <node ref="DD1" pin="11"/>
+      <node ref="TP1" pin="1"/>
+    </net>
+    <net code="49" name="/CC_CS">
+      <node ref="R6" pin="1"/>
+      <node ref="DD1" pin="14"/>
+      <node ref="DD2" pin="7"/>
+    </net>
+    <net code="50" name="/CC_MOSI">
+      <node ref="DD2" pin="20"/>
+      <node ref="DD1" pin="17"/>
+    </net>
+    <net code="51" name="Net-(C9-Pad1)">
+      <node ref="DD2" pin="5"/>
+      <node ref="C9" pin="1"/>
+    </net>
+    <net code="52" name="Net-(DD2-Pad3)">
+      <node ref="DD2" pin="3"/>
+    </net>
+    <net code="53" name="/CC_MISO">
+      <node ref="DD2" pin="2"/>
+      <node ref="DD1" pin="16"/>
+    </net>
+    <net code="54" name="Net-(C8-Pad1)">
+      <node ref="C8" pin="1"/>
+      <node ref="DD2" pin="10"/>
+      <node ref="XTAL2" pin="2"/>
+    </net>
+    <net code="55" name="/ANT2">
+      <node ref="C22" pin="2"/>
+      <node ref="L2" pin="1"/>
+      <node ref="C19" pin="1"/>
+    </net>
+    <net code="56" name="/RF2">
+      <node ref="DD2" pin="13"/>
+      <node ref="BLN1" pin="3"/>
+    </net>
+    <net code="57" name="/RF1">
+      <node ref="DD2" pin="12"/>
+      <node ref="BLN1" pin="4"/>
+    </net>
+    <net code="58" name="Net-(DD2-Pad17)">
+      <node ref="DD2" pin="17"/>
+      <node ref="R7" pin="1"/>
+    </net>
+    <net code="59" name="/ANT1">
+      <node ref="L2" pin="2"/>
+      <node ref="C17" pin="1"/>
+      <node ref="BLN1" pin="1"/>
+    </net>
+    <net code="60" name="/~220V">
+      <node ref="LIPO_BAT1" pin="1"/>
+      <node ref="C11" pin="2"/>
+    </net>
+  </nets>
+</export>

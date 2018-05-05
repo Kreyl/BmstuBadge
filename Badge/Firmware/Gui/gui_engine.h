@@ -19,11 +19,13 @@
 class Gui_t {
 private:
     const Page_t *CurrPage;
+    void DrawDigit(uint16_t Top, uint16_t Left, uint8_t Digit);
 public:
     void Init();
     void DrawPage(uint8_t APage);
     // Inner use
     void ITask();
+    void DrawNumber(uint16_t Top, uint16_t Left, int16_t Number, uint8_t DecimalDigits, const char* someSuffixOnDisk);
 };
 
 extern Gui_t Gui;

@@ -42,8 +42,8 @@
 /*
  * ST driver system settings.
  */
-#define STM32_ST_IRQ_PRIORITY               2
-#define STM32_ST_USE_TIMER                  14
+//#define STM32_ST_IRQ_PRIORITY               2
+//#define STM32_ST_USE_TIMER                  14
 
 
 #endif /* _MCUCONF_H_ */

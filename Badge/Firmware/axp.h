@@ -30,15 +30,20 @@ public:
 	void turnOnLDO4();
 	void turnOnDCDC3();
 	void keyShortStartShortFinish();
+	uint16_t readChargeStatus();
 	uint16_t readVBUSVoltage();
 	uint16_t readVBUSCurrent();
 	uint16_t readACINVoltage();
 	uint16_t readACINCurrent();
 	uint16_t readTemperature();
-	uint16_t readBatVoltage();
+	uint16_t readBatVoltage(bool sendInfoViaUart = false);
 	uint16_t readIPSOUTVoltage();
+
+	uint16_t batSavedVoltage;
+    void ITask();
 
 };
 
+extern axp_t axp;
 
 #endif /* AXP_H_ */

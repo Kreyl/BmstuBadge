@@ -18,7 +18,7 @@
 
 // OS timer settings
 #define STM32_ST_IRQ_PRIORITY   2
-#define STM32_ST_USE_TIMER      5
+#define STM32_ST_USE_TIMER      14
 #define SYS_TIM_CLK             (Clk.APBFreqHz)    // Timer 5 is clocked by APB1
 
 // Freq of external crystal if any. Leave it here even if not used.
@@ -30,8 +30,6 @@
 #define I2C1_ENABLED            FALSE
 #define I2C_USE_SEMAPHORE       FALSE
 
-#if 1 // ========================== GPIO =======================================
-
 // UART
 #define UART_GPIO       GPIOA
 #define UART_TX_PIN     9
@@ -39,13 +37,9 @@
 #define UART_AF         AF7 // for all USARTs
 
 // RGB LED
-#define LED_GREEN_CH    { GPIOB, 1, TIM3, 4, invNotInverted, omPushPull, 255 }
-#define LED_RED_CH      { GPIOB, 0, TIM3, 3, invNotInverted, omPushPull, 255 }
-#define LED_BLUE_CH     { GPIOB, 2, TIM3, 2, invNotInverted, omPushPull, 255 }
-
-// Radio: SPI, PGpio, Sck, Miso, Mosi, Cs, Gdo0
-#define CC_Setup0       SPI1, GPIOA, 5,6,7, 4, 1
-#endif // GPIO
+#define LED_GREEN_CH    { GPIOB, 0, TIM3, 3, invNotInverted, omPushPull, 255 }
+#define LED_RED_CH      { GPIOB, 1, TIM3, 4, invNotInverted, omPushPull, 255 }
+#define LED_BLUE_CH     { GPIOB, 5, TIM3, 2, invNotInverted, omPushPull, 255 }
 
 
 #if 1 // ========================== USART ======================================

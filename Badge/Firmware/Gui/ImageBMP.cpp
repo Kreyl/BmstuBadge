@@ -34,7 +34,7 @@ static BMPFileInfo_t Info;
 
 
 void ImageBMP_t::Init() {
-	ili.Init();
+	Lcd.Init();
 }
 
 static uint8_t IBuf[4800];
@@ -46,23 +46,33 @@ uint8_t ImageBMP_t::ShowImage(uint16_t Top, uint16_t Left, const char* AFileName
 
     // Fill buffer
     char Chunk[2] = {0, 0};
-    const uint32_t ImageSize = 2 * Info.ImageWidth * Info.ImageHeight;
+    const uint8_t BytesPerPixel = Info.BitsPerPixel / 8;
+    const uint32_t ImageSize = BytesPerPixel * Info.ImageWidth * Info.ImageHeight;
     uint32_t BufferSize = 4800;
-    const uint16_t TotalNumberOfPacks = ImageSize / BufferSize;
+    uint16_t TotalNumberOfPacks = ImageSize / BufferSize + 1;
     uint32_t HeightPerPack = Info.ImageHeight / TotalNumberOfPacks;
+    TotalNumberOfPacks = Info.ImageHeight / HeightPerPack;
 
-    uint16_t NumberOfPacks = TotalNumberOfPacks;
-    if(ImageSize < BufferSize) BufferSize = ImageSize; //for small pics
+
+
+    uint16_t CurrentPack = 0;
 
     uint8_t *ImageBuffer = IBuf;
 
-    if(f_lseek(&IFile, Info.DataBitsOffset) != FR_OK) goto end;
+//    Printf("Info.ImageWidth = %d\n", Info.ImageWidth);
+
+    if(f_lseek(&IFile, (Info.DataBitsOffset)) != FR_OK) goto end;
     if(TryRead(&IFile, Chunk, 2) != retvOk) goto end;
 
-    while(NumberOfPacks--){
-    	//if(NumberOfPacks == 0) {BufferSize = BufferSize/2;}
-        if(TryRead(&IFile, ImageBuffer, BufferSize) != retvOk) goto end;
-        ili.DrawImage((uint32_t)(Left), (uint32_t)(Top + (TotalNumberOfPacks - NumberOfPacks - 1) * HeightPerPack), Info.ImageWidth, HeightPerPack, ImageBuffer);
+//    Printf("Info.BitsPerPixel = %d \n\r", Info.BitsPerPixel);
+//    Printf("HeightPerPack = %d \n\r", HeightPerPack);
+//    Printf("TotalNumberOfPacks = %d \n\r", TotalNumberOfPacks);
+//    Printf("ImageSize = %d \n\r", ImageSize);
+
+    while(CurrentPack < TotalNumberOfPacks){
+        if(TryRead(&IFile, ImageBuffer, BytesPerPixel*HeightPerPack*(Info.ImageWidth - 1)) != retvOk);// goto end;
+        Lcd.DrawImage((uint32_t)Left, (uint32_t)(Top + HeightPerPack * CurrentPack), (Info.ImageWidth - 1), HeightPerPack, ImageBuffer);
+        CurrentPack++;
     }
 
 
@@ -71,7 +81,7 @@ uint8_t ImageBMP_t::ShowImage(uint16_t Top, uint16_t Left, const char* AFileName
 
     end:
     f_close(&IFile);
-//    Printf("error reading file");
+    Printf("error reading file \n\r");
     return retvFail;
 }
 

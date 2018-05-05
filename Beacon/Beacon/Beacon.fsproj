@@ -10,8 +10,9 @@
 	<Document>
 		<LocalLibrary />
 		<Pcb>
-			<File path=".\BmstuAnchor.fsx" Folder="-1" isopened="1"/>
+			<File path=".\BmstuAnchor.fsx" Folder="-1" isopened="0"/>
 		</Pcb>
+		<Documents path="J:\ReaderV1-4\BmstuBadge-master\Badge_hw\"/>
 		<Import>
 			<Specctra>
 			<Path name="F:\BMSTUBadge\Beacon\Beacon_hw\BmstuAnchor.dsn"/>

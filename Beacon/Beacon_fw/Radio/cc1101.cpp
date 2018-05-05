@@ -8,7 +8,9 @@
 #include "cc1101.h"
 #include "uart.h"
 
-#define CC_MAX_BAUDRATE_HZ  6500000
+cc1101_t CC;
+
+#define CC_MAX_BAUDRATE_HZ 6500000
 
 uint8_t cc1101_t::Init() {
     // ==== GPIO ====
@@ -19,10 +21,10 @@ uint8_t cc1101_t::Init() {
 #elif defined STM32F030 || defined STM32F0
 #define CC_AF   AF0
 #endif
-    PinSetupOut      ((GPIO_TypeDef*)PGpio, Cs,   omPushPull);
-    PinSetupAlterFunc((GPIO_TypeDef*)PGpio, Sck,  omPushPull, pudNone, CC_AF);
-    PinSetupAlterFunc((GPIO_TypeDef*)PGpio, Miso, omPushPull, pudNone, CC_AF);
-    PinSetupAlterFunc((GPIO_TypeDef*)PGpio, Mosi, omPushPull, pudNone, CC_AF);
+    PinSetupOut      (CC_GPIO, CC_CS,   omPushPull);
+    PinSetupAlterFunc(CC_GPIO, CC_SCK,  omPushPull, pudNone, CC_AF);
+    PinSetupAlterFunc(CC_GPIO, CC_MISO, omPushPull, pudNone, CC_AF);
+    PinSetupAlterFunc(CC_GPIO, CC_MOSI, omPushPull, pudNone, CC_AF);
     IGdo0.Init(ttFalling);
     CsHi();
     // ==== SPI ====
@@ -135,12 +137,12 @@ void cc1101_t::SetChannel(uint8_t AChannel) {
 
 void cc1101_t::Transmit(void *Ptr) {
 //     WaitUntilChannelIsBusy();   // If this is not done, time after time FIFO is destroyed
-//    while(IState != CC_STB_IDLE) EnterIdle();
+    while(IState != CC_STB_IDLE) EnterIdle();
     //Recalibrate();
-    EnterTX();  // Start transmission of preamble while writing FIFO
     WriteTX((uint8_t*)Ptr, IPktSz);
     // Enter TX and wait IRQ
     chSysLock();
+    EnterTX();  // Start transmission of preamble while writing FIFO
     chThdSuspendS(&ThdRef); // Wait IRQ
     chSysUnlock();          // Will be here when IRQ fires
 }
@@ -154,6 +156,7 @@ uint8_t cc1101_t::Receive(uint32_t Timeout_ms, void *Ptr, int8_t *PRssi) {
     msg_t Rslt = chThdSuspendTimeoutS(&ThdRef, MS2ST(Timeout_ms));    // Wait IRQ
     chSysUnlock();  // Will be here when IRQ will fire, or timeout occur - with appropriate message
 
+    Printf("cc read status: %d\r", Rslt);
     if(Rslt == MSG_TIMEOUT) {   // Nothing received, timeout occured
         EnterIdle();            // Get out of RX mode
         return retvTimeout;
@@ -227,7 +230,14 @@ uint8_t cc1101_t::ReadFIFO(void *Ptr, int8_t *PRssi) {
     uint8_t b, *p = (uint8_t*)Ptr;
      // Check if received successfully
      if(ReadRegister(CC_PKTSTATUS, &b) != retvOk) return retvFail;
-//     Printf("St: %X  \r", b);
+     Printf("St: %X  \r", b);
+#if 1
+     if(b & 0x30){
+    	 uint8_t rssi;
+    	 ReadRegister(CC_RSSI, &rssi);
+         Printf("rssi: %d  \r", rssi);
+     }
+#endif
      if(b & 0x80) {  // CRC OK
          // Read FIFO
          CsLo();                // Start transmission
@@ -251,3 +261,4 @@ uint8_t cc1101_t::ReadFIFO(void *Ptr, int8_t *PRssi) {
      else return retvFail;
 }
 #endif
+

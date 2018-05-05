@@ -1,6 +1,6 @@
-update=15.08.2017 22:11:51
+update=18.04.2018 13:35:50
 version=1
-last_client=kicad
+last_client=eeschema
 [pcbnew]
 version=1
 LastNetListRead=
@@ -25,16 +25,6 @@ version=1
 NetIExt=net
 [general]
 version=1
-[schematic_editor]
-version=1
-PageLayoutDescrFile=
-PlotDirectoryName=
-SubpartIdSeparator=0
-SubpartFirstId=65
-NetFmtName=
-SpiceForceRefPrefix=0
-SpiceUseNetNumbers=0
-LabSize=60
 [eeschema]
 version=1
 LibDir=F:/Kreyl/LibsForKiCAD/Kicad;KiCAD Libs
@@ -96,3 +86,13 @@ LibName54=D:/Kreyl/LibsForKiCAD/Kicad/Transformers
 LibName55=D:/Kreyl/LibsForKiCAD/Kicad/Transistors_kl
 LibName56=Badge-cacheGOST
 LibName57=KiCAD Libs/sensors_ns
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceAjustPassiveValues=0
+LabSize=60
+ERC_TestSimilarLabels=1

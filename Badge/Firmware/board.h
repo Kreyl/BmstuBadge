@@ -77,8 +77,6 @@
 #define SD_CLK          GPIOC, 12, omPushPull, pudNone,   SD_AF
 #define SD_CMD          GPIOD,  2, omPushPull, pudPullUp, SD_AF
 
-// Radio: SPI, PGpio, Sck, Miso, Mosi, Cs, Gdo0
-#define CC_Setup0       SPI1, GPIOA, 5,6,7, 4, 3
 
 //LCD
 #define LCD_DATA_GPIO   GPIOB

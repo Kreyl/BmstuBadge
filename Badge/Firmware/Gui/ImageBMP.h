@@ -16,7 +16,6 @@
 class ImageBMP_t {
 private:
     FIL IFile;
-    ILI9488_t ili;
 //    uint32_t Buf1[(FRAME_BUF_SZ/4)], Buf2[(FRAME_BUF_SZ/4)], *PCurBuf, BufSz;
     uint8_t OpenBMP(const char* AFileName);
 
