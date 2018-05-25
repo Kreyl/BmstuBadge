@@ -14,6 +14,7 @@
 #include "SimpleSensors.h"
 #include "board.h"
 #include "radio_lvl1.h"
+#include "Navigation.h"
 
 #if 1 // ======================== Variables and defines ========================
 // Forever
@@ -42,7 +43,10 @@ int main(void) {
     Led.Init();
     //Led.StartOrRestart(lsqStart);
 
+
+
     Radio.Init();
+    Navigation.Init();
 
     // Main cycle
     ITask();
@@ -58,6 +62,15 @@ void ITask() {
                 ((Shell_t*)Msg.Ptr)->SignalCmdProcessed();
                 break;
             case evtRadioTransmitted:
+            	Led.StartOrRestart(lsqHit);
+            	break;
+            case evtNaviSynchroFailure:
+            	Led.StartOrRestart(lsqFailure);
+            	break;
+            case evtNaviSynchronized:
+            	Led.StartOrRestart(lsqProcess);
+            	break;
+            case evtNaviEndOfCycle:
             	Led.StartOrRestart(lsqHit);
             	break;
 

@@ -193,7 +193,7 @@ $EndComp
 Text Label 19170 5710 0    60   ~ 0
 ANT2
 Text Notes 13890 4760 0    197  ~ 39
-Радиочастотный тракт
+RF part
 NoConn ~ 13600 6310
 $Comp
 L C-RESCUE-Badge C9
@@ -841,15 +841,15 @@ LED_G
 Text Label 2750 11060 0    60   ~ 0
 LED_B
 Text Notes 15810 1950 0    197  ~ 39
-Разъем программирования и отладки\nмикроконтроллера
+Connector
 Text Notes 4460 1910 0    197  ~ 39
-Система индикации
+LEDs
 Text Notes 2900 5190 0    197  ~ 39
-Фильтр питания микроконтроллера
+Power supply filtering
 Text Notes 3950 9740 0    197  ~ 39
-Микроконтроллер
+MCU unit
 Text Notes 17740 9710 0    197  ~ 39
-Блок питания
+Power supply unit
 $Comp
 L GND #PWR45
 U 1 1 59A442EA
@@ -1348,7 +1348,7 @@ F 3 "" H -5470 8110 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Text Notes 9840 10200 0    197  ~ 39
-Соединение аналоговой земли \nс цифровой землей
+Analog to digital GND
 Wire Notes Line
 	470  3880 22920 3880
 Wire Notes Line

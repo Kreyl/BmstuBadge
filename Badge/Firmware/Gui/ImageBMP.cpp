@@ -34,14 +34,16 @@ static BMPFileInfo_t Info;
 
 
 void ImageBMP_t::Init() {
-	Lcd.Init();
+	ImageReady = true;
 }
 
 static uint8_t IBuf[4800];
 
 uint8_t ImageBMP_t::ShowImage(uint16_t Top, uint16_t Left, const char* AFileName) {
-    // Try to open file
+	if(!ImageReady) return retvFail;
+	ImageReady = false;
 
+	// Try to open file
     if(OpenBMP(AFileName) != retvOk) return retvFail;
 
     // Fill buffer
@@ -70,18 +72,23 @@ uint8_t ImageBMP_t::ShowImage(uint16_t Top, uint16_t Left, const char* AFileName
 //    Printf("ImageSize = %d \n\r", ImageSize);
 
     while(CurrentPack < TotalNumberOfPacks){
+    	Printf("CurrentPack = %d \n\r", CurrentPack);
         if(TryRead(&IFile, ImageBuffer, BytesPerPixel*HeightPerPack*(Info.ImageWidth - 1)) != retvOk);// goto end;
+    	Printf("CurrentPack = %d \n\r", CurrentPack);
         Lcd.DrawImage((uint32_t)Left, (uint32_t)(Top + HeightPerPack * CurrentPack), (Info.ImageWidth - 1), HeightPerPack, ImageBuffer);
-        CurrentPack++;
+    	Printf("CurrentPack = %d \n\r", CurrentPack);
+    	CurrentPack++;
     }
 
 
     f_close(&IFile);
+    ImageReady = true;
     return retvOk;
 
     end:
     f_close(&IFile);
     Printf("error reading file \n\r");
+    ImageReady = true;
     return retvFail;
 }
 

@@ -156,7 +156,7 @@ uint8_t cc1101_t::Receive(uint32_t Timeout_ms, void *Ptr, int8_t *PRssi) {
     msg_t Rslt = chThdSuspendTimeoutS(&ThdRef, MS2ST(Timeout_ms));    // Wait IRQ
     chSysUnlock();  // Will be here when IRQ will fire, or timeout occur - with appropriate message
 
-    Printf("cc read status: %d\r", Rslt);
+    //Printf("cc read status: %d\r", Rslt);
     if(Rslt == MSG_TIMEOUT) {   // Nothing received, timeout occured
         EnterIdle();            // Get out of RX mode
         return retvTimeout;
@@ -230,12 +230,12 @@ uint8_t cc1101_t::ReadFIFO(void *Ptr, int8_t *PRssi) {
     uint8_t b, *p = (uint8_t*)Ptr;
      // Check if received successfully
      if(ReadRegister(CC_PKTSTATUS, &b) != retvOk) return retvFail;
-     Printf("St: %X  \r", b);
+     //Printf("St: %X  \r", b);
 #if 1
      if(b & 0x30){
     	 uint8_t rssi;
     	 ReadRegister(CC_RSSI, &rssi);
-         Printf("rssi: %d  \r", rssi);
+         //Printf("rssi: %d  \r", rssi);
      }
 #endif
      if(b & 0x80) {  // CRC OK

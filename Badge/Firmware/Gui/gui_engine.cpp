@@ -8,10 +8,11 @@
 #include "gui_engine.h"
 #include "color.h"
 #include "ImageBMP.h"
+#include "Navigation.h"
 
 Gui_t Gui;
 
-static THD_WORKING_AREA(waGuiThread, 1024);
+static THD_WORKING_AREA(waGuiThread, 2048);
 __noreturn
 static THD_FUNCTION(GuiThread, arg) {
     chRegSetThreadName("Gui");
@@ -59,7 +60,7 @@ void Gui_t::Init(void){
 	CurrPage = &MainPage;
 	CurrPage->Show();
 
-    chThdCreateStatic(waGuiThread, sizeof(waGuiThread), NORMALPRIO, GuiThread, NULL);
+    chThdCreateStatic(waGuiThread, sizeof(waGuiThread), HIGHPRIO, GuiThread, NULL);
 }
 
 void Gui_t::DrawDigit(uint16_t Top, uint16_t Left, uint8_t Digit){
@@ -149,6 +150,7 @@ void Gui_t::ITask() {
 			if((CurrPage = &MainPage) && (CurrPage->TouchProcess(Touch.X, Touch.Y) == 1)){
 				CurrPage = &NaviPage;
 				CurrPage -> Show();
+				Navigation.NavigationVisible = true;
 			}
 			if((CurrPage = &MainPage) && (CurrPage->TouchProcess(Touch.X, Touch.Y) == 2)){
 				CurrPage = &BadgePage;
@@ -157,6 +159,7 @@ void Gui_t::ITask() {
 			if((CurrPage = &NaviPage) && (CurrPage->TouchProcess(Touch.X, Touch.Y) == 1)){
 				CurrPage = &MainPage;
 				CurrPage -> Show();
+				Navigation.NavigationVisible = false;
 			}
 			if((CurrPage = &BadgePage) && (CurrPage->TouchProcess(Touch.X, Touch.Y) == 1)){
 				CurrPage = &MainPage;

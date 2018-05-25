@@ -20,6 +20,7 @@ private:
     uint8_t OpenBMP(const char* AFileName);
 
 public:
+    bool ImageReady;
     void Init();
 
     uint8_t ShowImage(uint16_t Top, uint16_t Left, const char* AFileName);

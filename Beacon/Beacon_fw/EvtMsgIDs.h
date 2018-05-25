@@ -12,5 +12,8 @@ enum EvtMsgId_t {
 
     // Pretending to eternity
     evtIdShellCmd,
-	evtRadioTransmitted
+	evtRadioTransmitted,
+	evtNaviSynchroFailure,
+	evtNaviSynchronized,
+	evtNaviEndOfCycle
 };

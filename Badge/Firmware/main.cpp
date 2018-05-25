@@ -18,6 +18,7 @@
 #include "ImageBMP.h"
 #include "gui_engine.h"
 #include "Radio/radio_lvl1.h"
+#include "Navigation.h"
 
 // Forever
 EvtMsgQ_t<EvtMsg_t, MAIN_EVT_Q_LEN> EvtQMain;
@@ -26,6 +27,7 @@ void OnCmd(Shell_t *PShell);
 void OnRadioReceived(uint32_t Rssi, uint8_t BeaconID);
 void OnBatVoltageChanged();
 void ITask();
+
 
 LedRGB_t Led { LED_RED_CH, LED_GREEN_CH, LED_BLUE_CH };
 
@@ -74,11 +76,11 @@ int main(void) {
 
     Touch.Init(&i2c3);
     SD.Init();
-//    Image.Init();
-
-    Gui.Init();
-
+    Image.Init();
+    //Gui.Init();
+    //Printf("GUI init ok");
     Radio.Init();
+    Navigation.Init();
 
     // Main cycle
     ITask();
@@ -125,20 +127,22 @@ void OnCmd(Shell_t *PShell) {
 
 void OnRadioReceived(uint32_t Rssi, uint8_t BeaconID){
 //	Printf("someone is here\r");
-	if(BeaconID == 0) return;
-    Printf("signal RSSI: %d, received ID: %d\r", Rssi, BeaconID );
-	Gui.DrawNumber(300, 340, Rssi, 0, "");
-	Gui.DrawNumber(300, 370, BeaconID, 0, "");
+//	if(BeaconID == 0) return;
+//    Printf("signal RSSI: %d, received ID: %d\r", Rssi, BeaconID );
+//    if(BeaconID = 42){
+//    	Navigation.Beacon[0].RSSI = Rssi;
+//    }
+
 }
 
 
 void OnBatVoltageChanged(){
 //	Printf("\r Battery voltage= %u*1.1mV\n",axp.batSavedVoltage);
 	uint16_t BatVoltage = axp.batSavedVoltage * 1.1 / 100;
-	const char* BatterySign = "";
+	const char* BatterySign = "bat_low.bmp";
 	if(BatVoltage > 35) BatterySign = "bat_full.bmp";
 	if(BatVoltage > 33) BatterySign = "bat_half.bmp";
 	if(BatVoltage <= 33) BatterySign = "bat_low.bmp";
-	Gui.DrawNumber(300, 400, BatVoltage, 1, BatterySign);
+	//Gui.DrawNumber(300, 400, BatVoltage, 1, BatterySign);
 }
 #endif

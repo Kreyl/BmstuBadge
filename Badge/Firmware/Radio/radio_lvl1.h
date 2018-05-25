@@ -16,7 +16,8 @@
 
 #if 1 // =========================== Pkt_t =====================================
 struct rPkt_t  {
-    uint8_t BeaconID;
+    uint16_t UID;
+    uint16_t BID;
 } __packed;
 
 #define RPKT_LEN    sizeof(rPkt_t)

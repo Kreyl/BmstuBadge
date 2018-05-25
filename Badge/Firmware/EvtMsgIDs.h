@@ -15,6 +15,8 @@ enum EvtMsgId_t {
     evtIdEverySecond = 2,
 	evtAxpBatVoltageChanged = 3,
 	evtRadioSomeIDReceived = 4,
+	evtNaviSynchronized = 5,
+	evtNaviSynchroFailure = 6,
 
     evtIdButtons = 15,
 

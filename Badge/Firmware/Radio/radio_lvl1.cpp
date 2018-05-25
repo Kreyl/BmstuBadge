@@ -32,27 +32,27 @@ rLevel1_t Radio;
 
 #if 1 // ================================ Task =================================
 
-static THD_WORKING_AREA(warLvl1Thread, 1024);
-__noreturn
-static THD_FUNCTION(rLvl1Thread, arg) {
-    chRegSetThreadName("rLvl1");
-    Radio.ITask();
-}
+//static THD_WORKING_AREA(warLvl1Thread, 1024);
+//__noreturn
+//static THD_FUNCTION(rLvl1Thread, arg) {
+//    chRegSetThreadName("rLvl1");
+//    Radio.ITask();
+//}
 
 __noreturn
 void rLevel1_t::ITask() {
     while(true) {
-    	Pkt.BeaconID = 0;
-    	int8_t Rssi = 0;
-        // Receive ID
-        CC.Recalibrate();
-        //CC.Transmit(&Pkt);
-        CC.Receive(500, &Pkt, &Rssi);
-        //Printf("received ID = %d with RSSI = %d\r", Pkt.BeaconID, Rssi);
-
-        EvtMsg_t Msg(evtRadioSomeIDReceived, Pkt.BeaconID, Rssi);
-    	EvtQMain.SendNowOrExit(Msg);
-        chThdSleepMilliseconds(2000);
+//    	Pkt.BID = 0;
+//    	int8_t Rssi = 0;
+//        // Receive ID
+//        CC.Recalibrate();
+//        //CC.Transmit(&Pkt);
+//        CC.Receive(2000, &Pkt, &Rssi);
+//        //Printf("received ID = %d with RSSI = %d\r", Pkt.BeaconID, Rssi);
+//
+//        EvtMsg_t Msg(evtRadioSomeIDReceived, Pkt.BID, Rssi);
+//    	EvtQMain.SendNowOrExit(Msg);
+//        chThdSleepMilliseconds(3000);
     } // while
 }
 #endif // task
@@ -71,7 +71,7 @@ uint8_t rLevel1_t::Init() {
         CC.Recalibrate();
         // Thread
 
-        chThdCreateStatic(warLvl1Thread, sizeof(warLvl1Thread), HIGHPRIO, rLvl1Thread, NULL);
+        //chThdCreateStatic(warLvl1Thread, sizeof(warLvl1Thread), HIGHPRIO, rLvl1Thread, NULL);
         return retvOk;
     }
     else return retvFail;
